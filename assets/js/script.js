@@ -179,7 +179,6 @@ $('.append-button').on('click', function () {
 
 // create <div class="grid-item"></div>
 function getItemElement() {
-
     var img = document.createElement('img')
     var $img = $( img )
     img.className = 'grid-item'
@@ -200,3 +199,35 @@ function getItemElement() {
         )
     return img;
   }
+
+  function getItemElementWithQuery(queryString) {
+    var img = document.createElement('img')
+    var $img = $( img )
+    img.className = 'grid-item'
+    var accessKey = "vNp_yDUN4379mM9W7GXhDe7zPCQf4EFeAtidDbMYbEE";
+    var pageNum = Math.floor(Math.random() * 30);
+    var settingPicURL = `https://api.unsplash.com/search/photos?&query=${queryString}&per_page=30&page=${pageNum}&client_id=${accessKey}`
+
+    // need to add Math.random and return multiple objects
+    fetch(settingPicURL).then(function (response) {
+        return response.json();
+    })
+        .then(function (settingdata) {
+            i = Math.floor(Math.random() * settingdata.results.length)
+            console.log(settingdata.results);
+            var settingLink = settingdata.results[i].urls.small;
+            $img.attr("src", settingLink);
+        }
+        )
+    return img;
+  }
+
+  $( function() {
+
+
+    $( "#setting" ).selectmenu({
+      change: function( event, data ) {
+        getItemElementWithQuery(data) 
+      }
+     });
+  } );
