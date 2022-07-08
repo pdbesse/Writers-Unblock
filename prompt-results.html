@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="./assets/css/style.css">
-    <title>Your Prompt</title>
+    <title>Spark Your Creativity!</title>
 </head>
 
 <body>
@@ -42,6 +42,10 @@
                             <input type="checkbox" id="nounsCheck">
                             Nouns
                         </label>
+                        <label class="checkbox">
+                          <input type="checkbox" id="storyCheck">
+                          Story Theme
+                      </label>
                     </div>
                     <button type="submit" id="search-btn" class="button is-primary is-outlined">Unblock!</button>
                     <button type="submit" id="save-btn" class="button is-link is-outlined">Save Prompt</button>
@@ -56,16 +60,17 @@
                         <img src="https://placehold.jp/30/dd6699/ffffff/300x150.png" id="portrait">
                     </figure>
 
-                    <div class="box">
-                        <li>first adj: <span id="adj1"></span></li>
-                        <li>second adj: <span id="adj2"></span></li>
-                        <li>third adj: <span id="adj3"></span></li>
+
+                    <div class="box" id="adj-container">
+                      <h3>Adjectives</h3>
+                    </div>
+                    <div class="box" id="noun-container">
+                      <h3>Nouns</h3>
                     </div>
                     <div class="box">
-                        <li>first noun: <span id="noun1"></span></li>
-                        <li>second noun: <span id="noun2"></span></li>
-                        <li>third noun: <span id="noun3"></span></li>
-                    </div>
+                      <h3>Story</h3>
+                      <span id="story"></span>
+                  </div>
                     <div class="box">
                         <p><button class="append-button">Add more settings</button></p>
 
