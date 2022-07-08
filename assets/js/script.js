@@ -1,4 +1,38 @@
-$("#generate").on("click"), getName();
+/*  if #nameCheck is true, run getName and display to label #name
+    if #portraitCheck is true, run getPersonPicture and change src of #portrait
+    if #settingsCHeck is true, run getSettingPicture and display to grid layout
+    if adjCheck is true, run getAdjs and display to #adj1, #adj2, #adj3
+    if nounsCheck is true, run getNouns and display to #noun1, #noun2, #noun3
+ */
+
+var nameCheck = $("#nameCheck")
+var portraitCheck = $("#portraitCheck")
+var settingsCheck = $("#settingsCheck")
+var adjCheck = $("#adjCheck")
+var nounsCheck = $("#nounsCheck")
+var searchBtn = $("#search-btn");
+var saveBtn = $("save-btn");
+var settingsLinks
+var nouns 
+var adjs  
+var storyThemes = ["Good vs Evil", "Love", "Redemption", "Courage & Perseverance", "Coming of Age", "Revenge"]
+
+$("#search-btn").click(function(){
+    if (portraitCheck.is(":checked")){
+        /* alert("test"); */
+        getPersonPicture();
+    }
+    if (nameCheck.is(":checked")){
+        getName();
+    }
+    /*if (nounsCheck.is(":checked")){
+        getName;
+    }
+    if (adjCheck.is(":checked")){
+            getName;
+    } */
+})
+   
 
 // Unsplash API request
 // person
@@ -10,14 +44,13 @@ function getPersonPicture (){
     // need to add Math.random and return multiple objects
     fetch(personPicURL).then(function (response) {
         return response.json();})
-        .then(function (data) {
+        .then(function (portraitdata) {
             for (i=1; i<2; i++) {
-            console.log(data.results[i])
-
-            var personURL = data.results[i].urls.small;
-            $("#picture").attr("src", personURL);
-            }
             
+            /* console.log(portraitdata.results[i].urls.small); */
+            var portraitLink = portraitdata.results[i].urls.small;
+            $("#portrait").attr("src", portraitLink);
+            }
         }
         
 )}
@@ -29,7 +62,8 @@ $("#generate").on("click", getPersonPicture);
 //WordsAPI request
 // noun
 
-function getNoun() {
+// only one random word can be returned per request => run multiple times?
+function getNouns() {
     const options = {
         method: 'GET',
         headers: {
@@ -38,13 +72,13 @@ function getNoun() {
         }
     };
     
-    fetch('https://wordsapiv1.p.rapidapi.com/words/?random=true&limit=5&partOfSpeech=noun', options)
+    fetch('https://wordsapiv1.p.rapidapi.com/words/?random=true&limit=3&partOfSpeech=noun', options)
     .then(function (response) {
         return response.json();})
-        .then(function (data) {
-            console.log(data);
+        .then(function (noundata) {
+            console.log(noundata);
         })
-    }
+}
 
 
 // NameFake API request
@@ -53,12 +87,14 @@ function getName () {
     var nameURL = "https://randomuser.me/api/?nat=us";
     fetch(nameURL).then(function (response) {
         return response.json();})
-        .then(function (data) {
-            console.log((data.results[0].name.first) + " " + (data.results[0].name.last));
+        .then(function (namedata) {
+            var name = ((namedata.results[0].name.first) + " " + (namedata.results[0].name.last));
+            /* console.log((namedata.results[0].name.first) + " " + (namedata.results[0].name.last)); */
+            /* console.log(name); */
+            $("#name").text(name);
             
       }
         
+
 )} 
 
-// story themes list in array
-// 
