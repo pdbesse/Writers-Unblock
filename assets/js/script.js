@@ -28,10 +28,12 @@ $("#search-btn").click(function () {
         getName();
     }
     if (nounsCheck.is(":checked")){
+        $("#noun-container").empty();
         getNouns();
     }
     if (adjCheck.is(":checked")){
-            getAdjs();
+        $("#adj-container").empty();
+        getAdjs();
     }
     if (themeCheck.is(":checked")){
         getTheme();
