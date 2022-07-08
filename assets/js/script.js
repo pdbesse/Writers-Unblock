@@ -13,16 +13,16 @@ var nounsCheck = $("#nounsCheck")
 var searchBtn = $("#search-btn");
 var saveBtn = $("save-btn");
 var settingsLinks
-var nouns 
-var adjs  
+var nouns
+var adjs
 var storyThemes = ["Good vs Evil", "Love", "Redemption", "Courage & Perseverance", "Coming of Age", "Revenge"]
 
-$("#search-btn").click(function(){
-    if (portraitCheck.is(":checked")){
+$("#search-btn").click(function () {
+    if (portraitCheck.is(":checked")) {
         /* alert("test"); */
         getPersonPicture();
     }
-    if (nameCheck.is(":checked")){
+    if (nameCheck.is(":checked")) {
         getName();
     }
     /*if (nounsCheck.is(":checked")){
@@ -32,26 +32,28 @@ $("#search-btn").click(function(){
             getName;
     } */
 })
-   
+
 
 // Unsplash API request
 // person
 
-function getPersonPicture (){
+function getPersonPicture() {
     var accessKey = "vNp_yDUN4379mM9W7GXhDe7zPCQf4EFeAtidDbMYbEE";
     var pageNum = Math.floor(Math.random() * 30);
     var personPicURL = `https://api.unsplash.com/search/photos?&query=person&per_page=30&page=${pageNum}&client_id=${accessKey}`
 
     // need to add Math.random and return multiple objects
     fetch(personPicURL).then(function (response) {
-        return response.json();})
+        return response.json();
+    })
         .then(function (portraitdata) {
-            i = Math.floor(Math.random() * portraitdata.results.length) 
+            i = Math.floor(Math.random() * portraitdata.results.length)
             console.log(portraitdata.results);
             var portraitLink = portraitdata.results[i].urls.small;
             $("#portrait").attr("src", portraitLink);
-            }
-)}
+        }
+        )
+}
 
 
 $("#generate").on("click", getPersonPicture);
@@ -69,10 +71,11 @@ function getNouns() {
             'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
         }
     };
-    
+
     fetch('https://wordsapiv1.p.rapidapi.com/words/?random=true&limit=3&partOfSpeech=noun', options)
-    .then(function (response) {
-        return response.json();})
+        .then(function (response) {
+            return response.json();
+        })
         .then(function (noundata) {
             console.log(noundata);
         })
@@ -81,20 +84,22 @@ function getNouns() {
 
 // NameFake API request
 
-function getName () {
+function getName() {
     var nameURL = "https://randomuser.me/api/?nat=us";
     fetch(nameURL).then(function (response) {
-        return response.json();})
+        return response.json();
+    })
         .then(function (namedata) {
             var name = ((namedata.results[0].name.first) + " " + (namedata.results[0].name.last));
             /* console.log((namedata.results[0].name.first) + " " + (namedata.results[0].name.last)); */
             /* console.log(name); */
             $("#name").text(name);
-            
-      }
-        
 
-)} 
+        }
+
+
+        )
+}
 
 
 // story themes list in array
@@ -115,64 +120,43 @@ function getName () {
 // external js: masonry.pkgd.js, imagesloaded.pkgd.js
 
 // init Masonry after all images have loaded
-var $grid = $('.grid').imagesLoaded( function() {
+var $grid = $('.grid').imagesLoaded(function () {
     $grid.masonry({
-      itemSelector: '.grid-item',
-      percentPosition: true,
-      columnWidth: '.grid-sizer'
-    }); 
-  });
-  
-  var $grid = $('.grid').masonry({
-    columnWidth: 160,
-    itemSelector: '.grid-item'
-  });
-  
-  $('.append-button').on( 'click', function() {
-    var elems = [ getItemElement(), getItemElement(), getItemElement() ];
-    // make jQuery object
-    var $elems = $( elems );
-    $grid.append( $elems ).masonry( 'appended', $elems );
-  });
-  
-  // create <div class="grid-item"></div>
-  function getItemElement() {
-    var elem = document.createElement('div');
-    var wRand = Math.random();
-    var hRand = Math.random();
-    var widthClass = wRand > 0.8 ? 'grid-item--width3' : wRand > 0.6 ? 'grid-item--width2' : '';
-    var heightClass = hRand > 0.85 ? 'grid-item--height4' : hRand > 0.6 ? 'grid-item--height3' : hRand > 0.35 ? 'grid-item--height2' : '';
-    elem.className = 'grid-item ' + widthClass + ' ' + heightClass;
-    return elem;
-  }
+        itemSelector: '.grid-item',
+        percentPosition: true,
+        columnWidth: '.grid-sizer'
+    });
+});
 
-  function getRandomPicture(){
-    /* var accessKey = "vNp_yDUN4379mM9W7GXhDe7zPCQf4EFeAtidDbMYbEE" */
-    var personPicURL = `https://api.unsplash.com/search/photos?&query=person&client_id=vNp_yDUN4379mM9W7GXhDe7zPCQf4EFeAtidDbMYbEE`
+
+$('.append-button').on('click', function () {
+    event.preventDefault();
+    var elems = [getItemElement()];
+    // // make jQuery object
+    var $elems = $( elems );
+    $grid.prepend( $elems ).masonry( 'prepended', $elems );
+    });
+
+// create <div class="grid-item"></div>
+function getItemElement() {
+
+    var img = document.createElement('img')
+    var $img = $( img )
+    img.className = 'grid-item'
+    var accessKey = "vNp_yDUN4379mM9W7GXhDe7zPCQf4EFeAtidDbMYbEE";
+    var pageNum = Math.floor(Math.random() * 30);
+    var settingPicURL = `https://api.unsplash.com/search/photos?&query=landscape&per_page=30&page=${pageNum}&client_id=${accessKey}`
 
     // need to add Math.random and return multiple objects
-    fetch(personPicURL).then(function (response) {
-        return response.json();})
-        .then(function (data) {
-            for (i=1; i<2; i++) {
-            console.log(data.results[i])
-
-            var personURL = data.results[i].urls.small;
-            $("#picture").attr("src", personURL);
-
-            var elem = document.createElement('div');
-            var wRand = Math.random();
-            var hRand = Math.random();
-            var widthClass = wRand > 0.8 ? 'grid-item--width3' : wRand > 0.6 ? 'grid-item--width2' : '';
-            var heightClass = hRand > 0.85 ? 'grid-item--height4' : hRand > 0.6 ? 'grid-item--height3' : hRand > 0.35 ? 'grid-item--height2' : '';
-            elem.className = 'grid-item ' + widthClass + ' ' + heightClass;
-            elem.innerHTML(<img src="data.results[i].urls.small"></img>)
-            return elem;
-
-            }
-            
+    fetch(settingPicURL).then(function (response) {
+        return response.json();
+    })
+        .then(function (settingdata) {
+            i = Math.floor(Math.random() * settingdata.results.length)
+            console.log(settingdata.results);
+            var settingLink = settingdata.results[i].urls.small;
+            $img.attr("src", settingLink);
         }
-        
-)}
-
-
+        )
+    return img;
+  }
