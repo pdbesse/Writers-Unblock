@@ -18,33 +18,34 @@
         </div>
 
         <div class="columns" id="page-column">
-            <div class="column is-narrow is-flex is-flex-direction-column" id="aside-column">
+            <div class="column is-narrow" id="aside-column">
                 <div class="box" style="width: 250px;">
-                    <p class="title is-5">I want to generate a new character with the following prompts:</p>
-                </div>
-                <h5>I want generate a new character with the following prompts:</h4>
-                    <label class="checkbox">
-                        <input type="checkbox" id="nameCheck">
-                        Name
-                    </label>
-                    <label class="checkbox">
-                        <input type="checkbox" id="portraitCheck">
-                        Portrait
-                    </label>
-                    <label class="checkbox">
-                        <input type="checkbox" id="settingsCheck">
-                        Setting
-                    </label>
-                    <label class="checkbox">
-                        <input type="checkbox" id="adjCheck">
-                        Adjectives
-                    </label>
-                    <label class="checkbox">
-                        <input type="checkbox" id="nounsCheck">
-                        Nouns
-                    </label>
+                    <p class="text">I want to generate a new character with the following prompts:</p>
+                    <div class="column is-narrow is-flex is-flex-direction-column">
+                        <label class="checkbox">
+                            <input type="checkbox" id="nameCheck">
+                            Name
+                        </label>
+                        <label class="checkbox">
+                            <input type="checkbox" id="portraitCheck">
+                            Portrait
+                        </label>
+                        <label class="checkbox">
+                            <input type="checkbox" id="settingsCheck">
+                            Setting
+                        </label>
+                        <label class="checkbox">
+                            <input type="checkbox" id="adjCheck">
+                            Adjectives
+                        </label>
+                        <label class="checkbox">
+                            <input type="checkbox" id="nounsCheck">
+                            Nouns
+                        </label>
+                    </div>
                     <button type="submit" id="search-btn" class="button is-primary is-outlined">Unblock!</button>
                     <button type="submit" id="save-btn" class="button is-link is-outlined">Save Prompt</button>
+                </div>
             </div>
             <div class="column" id="prompt-column">
                 <div class="box">
@@ -72,6 +73,9 @@
             </div>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="./assets/js/script.js"></script>
 </body>
 
 </html>

@@ -21,3 +21,4 @@ function getPersonPicture (){
 )}
 
 $("#generate").on("click", getPersonPicture);
+
