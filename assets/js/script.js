@@ -75,7 +75,8 @@ function getNouns() {
             return response.json();
         })
         .then(function (noundata) {
-            console.log(noundata);
+            console.log(noundata.word);
+            console.log(noundata.results[0].definition);
         })
     }
 }
