@@ -7,17 +7,25 @@
 
 var nameCheck = $("#nameCheck")
 var portraitCheck = $("#portraitCheck")
-var settingsCheck = $("#settingsCheck")
+var settingCheck = $("#settingCheck")
 var adjCheck = $("#adjCheck")
 var nounsCheck = $("#nounsCheck")
 var themeCheck = $("#storyCheck")
 var searchBtn = $("#search-btn");
 var saveBtn = $("save-btn");
 var portrait = $("#portrait")
-var settingsLinks
-var nouns
-var adjs
 var storyThemes = ["Good vs Evil", "Love", "Redemption", "Courage & Perseverance", "Coming of Age", "Revenge"]
+
+// external js: masonry.pkgd.js, imagesloaded.pkgd.js
+
+// init Masonry after all images have loaded
+var $grid = $('.grid').imagesLoaded(function () {
+    $grid.masonry({
+        itemSelector: '.grid-item',
+        percentPosition: true,
+        columnWidth: '.grid-sizer'
+    });
+});
 
 $("#search-btn").click(function () {
     if (portraitCheck.is(":checked")) {
@@ -27,16 +35,20 @@ $("#search-btn").click(function () {
     if (nameCheck.is(":checked")) {
         getName();
     }
-    if (nounsCheck.is(":checked")){
+    if (nounsCheck.is(":checked")) {
         $("#noun-container").empty();
         getNouns();
     }
-    if (adjCheck.is(":checked")){
+    if (adjCheck.is(":checked")) {
         $("#adj-container").empty();
         getAdjs();
     }
-    if (themeCheck.is(":checked")){
+    if (themeCheck.is(":checked")) {
         getTheme();
+    }
+    if (settingCheck.select()) {
+        alert("test");
+        getItemElementWithQuery();
     }
 })
 
@@ -141,50 +153,16 @@ function getTheme() {
     $("#story-theme").text(storyThemes[i]);
 }
 
-
-// story themes list in array
-// 
-
-
-
-
-
-
-
-
-
-
-
-
-
-// external js: masonry.pkgd.js, imagesloaded.pkgd.js
-
-// init Masonry after all images have loaded
-var $grid = $('.grid').imagesLoaded(function () {
-    $grid.masonry({
-        itemSelector: '.grid-item',
-        percentPosition: true,
-        columnWidth: '.grid-sizer'
-    });
-});
-
-
-$('.append-button').on('click', function () {
-    event.preventDefault();
-    var elems = [getItemElement()];
-    // // make jQuery object
-    var $elems = $( elems );
-    $grid.prepend( $elems ).masonry( 'prepended', $elems );
-    });
-
 // create <div class="grid-item"></div>
-function getItemElement() {
+  function getItemElementWithQuery() {
     var img = document.createElement('img')
     var $img = $( img )
     img.className = 'grid-item'
     var accessKey = "vNp_yDUN4379mM9W7GXhDe7zPCQf4EFeAtidDbMYbEE";
-    var pageNum = Math.floor(Math.random() * 30);
-    var settingPicURL = `https://api.unsplash.com/search/photos?&query=landscape&per_page=30&page=${pageNum}&client_id=${accessKey}`
+    var settingsQuery = $("#setting").val();
+    console.log(settingsQuery);
+    var pageNum = 1/* Math.floor(Math.random() * 30) */;
+    var settingPicURL = `https://api.unsplash.com/search/photos?&query=${settingsQuery}&page=${pageNum}&client_id=${accessKey}`
 
     // need to add Math.random and return multiple objects
     fetch(settingPicURL).then(function (response) {
@@ -198,36 +176,4 @@ function getItemElement() {
         }
         )
     return img;
-  }
-
-  function getItemElementWithQuery(queryString) {
-    var img = document.createElement('img')
-    var $img = $( img )
-    img.className = 'grid-item'
-    var accessKey = "vNp_yDUN4379mM9W7GXhDe7zPCQf4EFeAtidDbMYbEE";
-    var pageNum = Math.floor(Math.random() * 30);
-    var settingPicURL = `https://api.unsplash.com/search/photos?&query=${queryString}&per_page=30&page=${pageNum}&client_id=${accessKey}`
-
-    // need to add Math.random and return multiple objects
-    fetch(settingPicURL).then(function (response) {
-        return response.json();
-    })
-        .then(function (settingdata) {
-            i = Math.floor(Math.random() * settingdata.results.length)
-            console.log(settingdata.results);
-            var settingLink = settingdata.results[i].urls.small;
-            $img.attr("src", settingLink);
-        }
-        )
-    return img;
-  }
-
-  $( function() {
-
-
-    $( "#setting" ).selectmenu({
-      change: function( event, data ) {
-        getItemElementWithQuery(data) 
-      }
-     });
-  } );
+    }
