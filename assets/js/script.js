@@ -98,3 +98,83 @@ function getName () {
 
 )} 
 
+
+// story themes list in array
+// 
+
+
+
+
+
+
+
+
+
+
+
+
+
+// external js: masonry.pkgd.js, imagesloaded.pkgd.js
+
+// init Masonry after all images have loaded
+var $grid = $('.grid').imagesLoaded( function() {
+    $grid.masonry({
+      itemSelector: '.grid-item',
+      percentPosition: true,
+      columnWidth: '.grid-sizer'
+    }); 
+  });
+  
+  var $grid = $('.grid').masonry({
+    columnWidth: 160,
+    itemSelector: '.grid-item'
+  });
+  
+  $('.append-button').on( 'click', function() {
+    var elems = [ getItemElement(), getItemElement(), getItemElement() ];
+    // make jQuery object
+    var $elems = $( elems );
+    $grid.append( $elems ).masonry( 'appended', $elems );
+  });
+  
+  // create <div class="grid-item"></div>
+  function getItemElement() {
+    var elem = document.createElement('div');
+    var wRand = Math.random();
+    var hRand = Math.random();
+    var widthClass = wRand > 0.8 ? 'grid-item--width3' : wRand > 0.6 ? 'grid-item--width2' : '';
+    var heightClass = hRand > 0.85 ? 'grid-item--height4' : hRand > 0.6 ? 'grid-item--height3' : hRand > 0.35 ? 'grid-item--height2' : '';
+    elem.className = 'grid-item ' + widthClass + ' ' + heightClass;
+    return elem;
+  }
+
+  function getRandomPicture(){
+    /* var accessKey = "vNp_yDUN4379mM9W7GXhDe7zPCQf4EFeAtidDbMYbEE" */
+    var personPicURL = `https://api.unsplash.com/search/photos?&query=person&client_id=vNp_yDUN4379mM9W7GXhDe7zPCQf4EFeAtidDbMYbEE`
+
+    // need to add Math.random and return multiple objects
+    fetch(personPicURL).then(function (response) {
+        return response.json();})
+        .then(function (data) {
+            for (i=1; i<2; i++) {
+            console.log(data.results[i])
+
+            var personURL = data.results[i].urls.small;
+            $("#picture").attr("src", personURL);
+
+            var elem = document.createElement('div');
+            var wRand = Math.random();
+            var hRand = Math.random();
+            var widthClass = wRand > 0.8 ? 'grid-item--width3' : wRand > 0.6 ? 'grid-item--width2' : '';
+            var heightClass = hRand > 0.85 ? 'grid-item--height4' : hRand > 0.6 ? 'grid-item--height3' : hRand > 0.35 ? 'grid-item--height2' : '';
+            elem.className = 'grid-item ' + widthClass + ' ' + heightClass;
+            elem.innerHTML(<img src="data.results[i].urls.small"></img>)
+            return elem;
+
+            }
+            
+        }
+        
+)}
+
+
