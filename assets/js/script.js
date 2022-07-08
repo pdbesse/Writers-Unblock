@@ -47,7 +47,7 @@ $("#search-btn").click(function () {
         getTheme();
     }
     if (settingCheck.select()) {
-        alert("test");
+        /* alert("test"); */
         getItemElementWithQuery();
     }
 })
@@ -58,7 +58,7 @@ $("#search-btn").click(function () {
 
 function getPersonPicture() {
     var accessKey = "vNp_yDUN4379mM9W7GXhDe7zPCQf4EFeAtidDbMYbEE";
-    var pageNum = Math.floor(Math.random() * 30);
+    var pageNum = Math.floor(Math.random() * 5);
 
     var personPicURL = `https://api.unsplash.com/search/photos?&query=man%20person&per_page=30&page=${pageNum}&client_id=${accessKey}`
 
@@ -68,7 +68,7 @@ function getPersonPicture() {
     })
         .then(function (portraitdata) {
             i = Math.floor(Math.random() * portraitdata.results.length);
-            console.log(portraitdata.results);
+            /* console.log(portraitdata.results); */
             var portraitLink = portraitdata.results[i].urls.small;
             portrait.attr("src", portraitLink);
         })
@@ -120,8 +120,8 @@ function getAdjs() {
             return response.json();
         })
         .then(function (adjdata) {
-            console.log(adjdata.word);
-            console.log(adjdata.results[0].definition);
+            /* console.log(adjdata.word);
+            console.log(adjdata.results[0].definition); */
 
             var adjCard = document.createElement("div");
                 adjCard.setAttribute("class", "card, column");
@@ -160,8 +160,8 @@ function getTheme() {
     img.className = 'grid-item'
     var accessKey = "vNp_yDUN4379mM9W7GXhDe7zPCQf4EFeAtidDbMYbEE";
     var settingsQuery = $("#setting").val();
-    console.log(settingsQuery);
-    var pageNum = 1/* Math.floor(Math.random() * 30) */;
+    /* console.log(settingsQuery); */
+    var pageNum = Math.floor(Math.random() * 5);
     var settingPicURL = `https://api.unsplash.com/search/photos?&query=${settingsQuery}&page=${pageNum}&client_id=${accessKey}`
 
     // need to add Math.random and return multiple objects
