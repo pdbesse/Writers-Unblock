@@ -80,7 +80,7 @@ function getNouns() {
             console.log(noundata.results[0].definition); */
 
             var nounCard = document.createElement("div");
-                nounCard.setAttribute("class", "card");
+                nounCard.setAttribute("class", "card, column");
             $(nounCard).append("<h5 class='card-header'>" + noundata.word + "</h5>");
             $(nounCard).append("<p class='card-content'>" + noundata.results[0].definition + "</p>");
             $("#noun-container").append(nounCard);
