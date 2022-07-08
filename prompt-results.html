@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="./assets/css/style.css">
-    <title>Your Prompt</title>
+    <title>Spark Your Creativity!</title>
 </head>
 
 <body>
@@ -42,6 +42,10 @@
                             <input type="checkbox" id="nounsCheck">
                             Nouns
                         </label>
+                        <label class="checkbox">
+                          <input type="checkbox" id="storyCheck">
+                          Story Theme
+                      </label>
                     </div>
                     <button type="submit" id="search-btn" class="button is-primary is-outlined">Unblock!</button>
                     <button type="submit" id="save-btn" class="button is-link is-outlined">Save Prompt</button>
@@ -57,15 +61,21 @@
                     </figure>
 
                     <div class="box">
+                      <h3>Adjectives</h3>
                         <li>first adj: <span id="adj1"></span></li>
                         <li>second adj: <span id="adj2"></span></li>
                         <li>third adj: <span id="adj3"></span></li>
                     </div>
                     <div class="box">
+                      <h3>Nouns</h3>
                         <li>first noun: <span id="noun1"></span></li>
                         <li>second noun: <span id="noun2"></span></li>
                         <li>third noun: <span id="noun3"></span></li>
                     </div>
+                    <div class="box">
+                      <h3>Story</h3>
+                      <span id="story"></span>
+                  </div>
                     <div class="box">
                         <p><button class="append-button">Add more settings</button></p>
 
