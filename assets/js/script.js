@@ -223,9 +223,9 @@ function getItemElement() {
   $( function() {
 
 
-    $( "#setting" ).selectmenu({
-      change: function( event, data ) {
-        getItemElementWithQuery(data) 
-      }
-     });
+    // $( "#setting" ).selectmenu({
+    //   change: function( event, data ) {
+    //     getItemElementWithQuery(data) 
+    //   }
+    //  });
   } );
