@@ -47,8 +47,12 @@ $("#search-btn").click(function () {
         getTheme();
     }
     if (settingCheck.select()) {
-        /* alert("test"); */
-        getItemElementWithQuery();
+        var elems = [getItemElementWithQuery()];
+        // // make jQuery object
+         var $elems = $( elems );
+        $grid.prepend( $elems ).masonry( 'prepended', $elems );
+
+        /* getItemElementWithQuery(); */
     }
 })
 
@@ -153,15 +157,40 @@ function getTheme() {
     $("#story-theme").text(storyThemes[i]);
 }
 
-// create <div class="grid-item"></div>
+
+/* // create <div class="grid-item"></div>
   function getItemElementWithQuery() {
+    var accessKey = "vNp_yDUN4379mM9W7GXhDe7zPCQf4EFeAtidDbMYbEE";
+    var settingsQuery = $("#setting").val();
+    /* console.log(settingsQuery); */
+   /*  var pageNum = Math.floor(Math.random() * 5);
+    var settingPicURL = `https://api.unsplash.com/search/photos?&query=${settingsQuery}&page=${pageNum}&client_id=${accessKey}` */
+
+    // need to add Math.random and return multiple objects
+   /*  fetch(settingPicURL).then(function (response) {
+        return response.json();
+    })
+        .then(function (settingdata) {
+            i = Math.floor(Math.random() * settingdata.results.length) */
+            /* console.log(settingdata.results); */
+/* 
+            var settingLink = settingdata.results[i].urls.small;
+            var img = document.createElement('img');
+            img.setAttribute("class", "grid-item");
+            $img.attr("src", settingLink);
+        }
+        )
+    return img;
+    } */
+
+function getItemElementWithQuery() {
     var img = document.createElement('img')
     var $img = $( img )
     img.className = 'grid-item'
     var accessKey = "vNp_yDUN4379mM9W7GXhDe7zPCQf4EFeAtidDbMYbEE";
-    var settingsQuery = $("#setting").val();
+    var settingsQuery = $("#settingCheck").val();
     /* console.log(settingsQuery); */
-    var pageNum = Math.floor(Math.random() * 5);
+    var pageNum = Math.floor(Math.random() * 30);
     var settingPicURL = `https://api.unsplash.com/search/photos?&query=${settingsQuery}&page=${pageNum}&client_id=${accessKey}`
 
     // need to add Math.random and return multiple objects
@@ -176,4 +205,5 @@ function getTheme() {
         }
         )
     return img;
-    }
+}
+    
