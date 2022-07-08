@@ -29,9 +29,9 @@ $("#search-btn").click(function () {
     if (nounsCheck.is(":checked")){
         getNouns();
     }
-    /*if (adjCheck.is(":checked")){
-            getName;
-    } */
+    if (adjCheck.is(":checked")){
+            getAdjs();
+    }
 })
 
 
@@ -70,17 +70,49 @@ function getNouns() {
     };
     
     for (i = 0; i < 3; i++) {
-    fetch('https://wordsapiv1.p.rapidapi.com/words/?random=true&limit=3&partOfSpeech=noun', options)
+    fetch('https://wordsapiv1.p.rapidapi.com/words/?random=true&partOfSpeech=noun', options)
         .then(function (response) {
             return response.json();
         })
         .then(function (noundata) {
-            console.log(noundata.word);
-            console.log(noundata.results[0].definition);
+            /* console.log(noundata.word);
+            console.log(noundata.results[0].definition); */
+
+            var nounCard = document.createElement("div");
+                nounCard.setAttribute("class", "card");
+            $(nounCard).append("<h5 class='card-header'>" + noundata.word + "</h5>");
+            $(nounCard).append("<p class='card-content'>" + noundata.results[0].definition + "</p>");
+            $("#noun-container").append(nounCard);
         })
     }
 }
 
+function getAdjs() {
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': '5310a4a30cmsh92d3fc3f3671101p143a11jsn790aeb586352',
+            'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
+        }
+    };
+    
+    for (i = 0; i < 3; i++) {
+    fetch('https://wordsapiv1.p.rapidapi.com/words/?random=true&partOfSpeech=adjective', options)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (adjdata) {
+            console.log(adjdata.word);
+            console.log(adjdata.results[0].definition);
+
+            var adjCard = document.createElement("div");
+                adjCard.setAttribute("class", "card, column");
+            $(adjCard).append("<h5 class='card-header'>" + adjdata.word + "</h5>");
+            $(adjCard).append("<p class='card-content'>" + adjdata.results[0].definition + "</p>");
+            $("#adj-container").append(adjCard);
+        })
+    }
+}
 
 // NameFake API request
 
