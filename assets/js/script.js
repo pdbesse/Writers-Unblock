@@ -10,6 +10,7 @@ var portraitCheck = $("#portraitCheck")
 var settingsCheck = $("#settingsCheck")
 var adjCheck = $("#adjCheck")
 var nounsCheck = $("#nounsCheck")
+var themeCheck = $("#storyCheck")
 var searchBtn = $("#search-btn");
 var saveBtn = $("save-btn");
 var portrait = $("#portrait")
@@ -32,6 +33,9 @@ $("#search-btn").click(function () {
     if (adjCheck.is(":checked")){
             getAdjs();
     }
+    if (themeCheck.is(":checked")){
+        getTheme();
+    }
 })
 
 
@@ -49,12 +53,11 @@ function getPersonPicture() {
         return response.json();
     })
         .then(function (portraitdata) {
-            i = Math.floor(Math.random() * portraitdata.results.length)
+            i = Math.floor(Math.random() * portraitdata.results.length);
             console.log(portraitdata.results);
             var portraitLink = portraitdata.results[i].urls.small;
             portrait.attr("src", portraitLink);
-        }
-        )
+        })
 }
 
 //WordsAPI request
@@ -128,10 +131,12 @@ function getName() {
             /* console.log(name); */
             $("#name").text(name);
 
-        }
+        })
+}
 
-
-        )
+function getTheme() {
+    var i = Math.floor(Math.random() * storyThemes.length);
+    $("#story-theme").text(storyThemes[i]);
 }
 
 
