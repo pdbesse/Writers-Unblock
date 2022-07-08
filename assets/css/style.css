@@ -1,8 +1,14 @@
 .card-title{
     color:rgb(44, 107, 60)
 }
+.h5{
+    color:black;
+}
 .btn {
     background-color: rgb(143, 199, 141);
     color: #ffffff;
 }
 
+#save-btn{
+    background-color: rgb(121, 174, 204);
+}
