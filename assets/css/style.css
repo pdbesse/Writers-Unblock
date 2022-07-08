@@ -21,7 +21,9 @@
     align-items: center;
     text-align: center;
     justify-content: center;
+
 }
+
 
 /* ---- grid ---- */
 
@@ -51,5 +53,6 @@
   display: block;
   width: 100%;
 }
+
 
 
