@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <title>Your Prompt</title>
+</head>
+
+<body>
+    <div class="content">
+
+        <div class="column is-full">
+            <h1>WRITER'S UNBLOCK</h1>
+        </div>
+
+        <div class="columns" id="page-column">
+            <div class="column is-narrow" id="aside-column">
+                <div class="box" style="width: 250px;">
+                    <p class="text">I want to generate a new character with the following prompts:</p>
+                    <div class="column is-narrow is-flex is-flex-direction-column">
+                        <label class="checkbox">
+                            <input type="checkbox" id="nameCheck">
+                            Name
+                        </label>
+                        <label class="checkbox">
+                            <input type="checkbox" id="portraitCheck">
+                            Portrait
+                        </label>
+                        <label class="checkbox">
+                            <input type="checkbox" id="settingsCheck">
+                            Setting
+                        </label>
+                        <label class="checkbox">
+                            <input type="checkbox" id="adjCheck">
+                            Adjectives
+                        </label>
+                        <label class="checkbox">
+                            <input type="checkbox" id="nounsCheck">
+                            Nouns
+                        </label>
+                    </div>
+                    <button type="submit" id="search-btn" class="button is-primary is-outlined">Unblock!</button>
+                    <button type="submit" id="save-btn" class="button is-link is-outlined">Save Prompt</button>
+                </div>
+            </div>
+            <div class="column" id="prompt-column">
+                <div class="box">
+                    <p class="title is-9" id="name">//random generated name</p>
+
+
+                    <figure>
+                        <img src="https://placehold.jp/30/dd6699/ffffff/300x150.png" id="portrait">
+                    </figure>
+
+                    <div class="box">
+                        <li>first adj: <span id="adj1"></span></li>
+                        <li>second adj: <span id="adj2"></span></li>
+                        <li>third adj: <span id="adj3"></span></li>
+                    </div>
+                    <div class="box">
+                        <li>first noun: <span id="noun1"></span></li>
+                        <li>second noun: <span id="noun2"></span></li>
+                        <li>third noun: <span id="noun3"></span></li>
+                    </div>
+                    <div class="box">
+                        <p class="subtitle" id="grid-layout">//add grid layout library here</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="./assets/js/script.js"></script>
+</body>
+
+</html>

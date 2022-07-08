@@ -22,6 +22,10 @@ function getPersonPicture (){
         
 )}
 
+
+$("#generate").on("click", getPersonPicture);
+
+
 //WordsAPI request
 // noun
 
