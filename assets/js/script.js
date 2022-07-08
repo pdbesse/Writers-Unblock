@@ -12,6 +12,7 @@ var adjCheck = $("#adjCheck")
 var nounsCheck = $("#nounsCheck")
 var searchBtn = $("#search-btn");
 var saveBtn = $("save-btn");
+var portrait = $("#portrait")
 var settingsLinks
 var nouns
 var adjs
@@ -25,10 +26,10 @@ $("#search-btn").click(function () {
     if (nameCheck.is(":checked")) {
         getName();
     }
-    /*if (nounsCheck.is(":checked")){
-        getName;
+    if (nounsCheck.is(":checked")){
+        getNouns();
     }
-    if (adjCheck.is(":checked")){
+    /*if (adjCheck.is(":checked")){
             getName;
     } */
 })
@@ -40,7 +41,7 @@ $("#search-btn").click(function () {
 function getPersonPicture() {
     var accessKey = "vNp_yDUN4379mM9W7GXhDe7zPCQf4EFeAtidDbMYbEE";
     var pageNum = Math.floor(Math.random() * 30);
-    var personPicURL = `https://api.unsplash.com/search/photos?&query=person&per_page=30&page=${pageNum}&client_id=${accessKey}`
+    var personPicURL = `https://api.unsplash.com/search/photos?&query=man%20person&per_page=30&page=${pageNum}&client_id=${accessKey}`
 
     // need to add Math.random and return multiple objects
     fetch(personPicURL).then(function (response) {
@@ -50,14 +51,10 @@ function getPersonPicture() {
             i = Math.floor(Math.random() * portraitdata.results.length)
             console.log(portraitdata.results);
             var portraitLink = portraitdata.results[i].urls.small;
-            $("#portrait").attr("src", portraitLink);
+            portrait.attr("src", portraitLink);
         }
         )
 }
-
-
-$("#generate").on("click", getPersonPicture);
-
 
 //WordsAPI request
 // noun
@@ -71,7 +68,8 @@ function getNouns() {
             'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
         }
     };
-
+    
+    for (i = 0; i < 3; i++) {
     fetch('https://wordsapiv1.p.rapidapi.com/words/?random=true&limit=3&partOfSpeech=noun', options)
         .then(function (response) {
             return response.json();
@@ -79,6 +77,7 @@ function getNouns() {
         .then(function (noundata) {
             console.log(noundata);
         })
+    }
 }
 
 
