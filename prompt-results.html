@@ -5,56 +5,99 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" /> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="./assets/css/style.css">
     <title>Your Prompt</title>
 </head>
 
 <body>
+
+    <div class="columns">
+        <div class="column">
+            <h1>WRITER'S UNBLOCK</h1>
+            <h3>Your generated prompt:</h3>
+        </div>
+    </div>
+
+    <!-- bootstrap html -->
     <header>
         <div class="card card-body text-center">
             <h1 class="card-title">WRITER'S UNBLOCK</h1>
             <h3 class="card-title">Your generated prompt:</h3>
         </div>
     </header>
-    <main class="container-fluid d-lg-flex mt-4">
+    <main class="container-fluid d-lg-flex mt-2">
         <aside class="col-lg-3">
             <h5 class="card-text">I want generate a new character with the following prompts:</h4>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="nameCheck">
-                <label class="form-check-label" for="flexCheckDefault">
-                    Name
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="portraitCheck">
-                <label class="form-check-label" for="flexCheckDefault">
-                    Portrait
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="settingsCheck">
-                <label class="form-check-label" for="flexCheckDefault">
-                    Setting
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="adjCheck">
-                <label class="form-check-label" for="flexCheckDefault">
-                    Adjectives
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="nounsCheck">
-                <label class="form-check-label" for="flexCheckDefault">
-                    Nouns
-                </label>
-            </div>
-
-            <button type="submit" id="search-btn" class="btn btn-block">Unblock!</button>
-            <button type="submit" id="save-btn" class="btn btn-block">Save Prompt</button>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="nameCheck">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Name
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="portraitCheck">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Portrait
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="settingsCheck">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Setting
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="adjCheck">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Adjectives
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="nounsCheck">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Nouns
+                    </label>
+                </div>
+                <button type="submit" id="search-btn" class="button is-primary is-outlined">Unblock!</button>
+                <button type="submit" id="save-btn" class="button is-link is-outlined">Save Prompt</button>
         </aside>
-
+        <section class="col-lg-9 main-section">
+            <div class="card my-2">
+                <div class="card-body">
+                    <h4 class="card-text" id="name">//random generated name</h4>
+                </div>
+            </div>
+            <div class="card my-2">
+                <div class="card-body">
+                    <img src="https://placehold.jp/30/dd6699/ffffff/300x150.png" id="portrait">
+                </div>
+            </div>
+            <div class="card my-2">
+                <div class="card-body">
+                    <section id="grid-layout"><span>add grid layout library here</span></section>
+                </div>
+            </div>
+            <div class="card my-2">
+                <div class="card-body">
+                    <ul class="list-group list-group-horizontal" id="adj-list">
+                        <li class="list-group-item">first adj: <span id="adj1"></span></li>
+                        <li class="list-group-item">second adj: <span id="adj2"></span></li>
+                        <li class="list-group-item">third adj: <span id="adj3"></span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card my-2">
+                <div class="card-body">
+                    <ul class="list-group list-group-horizontal" id="noun-list">
+                        <li class="list-group-item">first noun: <span id="noun1"></span></li>
+                        <li class="list-group-item">second noun: <span id="noun2"></span></li>
+                        <li class="list-group-item">third noun: <span id="noun3"></span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
     </main>
 </body>
 

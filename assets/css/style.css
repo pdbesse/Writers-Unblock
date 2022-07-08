@@ -12,3 +12,13 @@
 #save-btn{
     background-color: rgb(121, 174, 204);
 }
+.main-section{
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+.list-group{
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
