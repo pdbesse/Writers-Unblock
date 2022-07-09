@@ -101,13 +101,13 @@ $("#search-btn").click(function () {
     if (nounsCheck.is(":checked")) {
         $("#noun-container").empty();
         getNouns();
-        document.getElementById('noun-container').className -= "is-hidden";
+        document.getElementById('noun-container-hide').className -= "is-hidden";
         nounsCheck.prop('checked', false);
     }
     if (adjCheck.is(":checked")) {
         $("#adj-container").empty();
         getAdjs();
-        document.getElementById('adj-container').className -= "is-hidden";
+        document.getElementById('adj-container-hide').className -= "is-hidden";
         adjCheck.prop('checked', false);
     }
     if (themeCheck.is(":checked")) {
