@@ -1,26 +1,26 @@
 .card-title{
-    color:rgb(44, 107, 60)
+  color:rgb(44, 107, 60)
 }
 .h5{
-    color:black;
+  color:black;
 }
 .btn {
-    background-color: rgb(143, 199, 141);
-    color: #ffffff;
+  background-color: rgb(143, 199, 141);
+  color: #ffffff;
 }
 
 #save-btn{
-    background-color: rgb(121, 174, 204);
+  background-color: rgb(121, 174, 204);
 }
 .main-section{
-    align-items: center;
-    text-align: center;
-    justify-content: center;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
 }
 .list-group{
-    align-items: center;
-    text-align: center;
-    justify-content: center;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
 
 }
 
@@ -28,31 +28,92 @@
 /* ---- grid ---- */
 
 .grid {
-  background: #DDD;
+background: #DDD;
 }
 
 /* clear fix */
 .grid:after {
-  content: '';
-  display: block;
-  clear: both;
+content: '';
+display: block;
+clear: both;
 }
 
 /* ---- .grid-item ---- */
 
 .grid-sizer,
 .grid-item {
-  width: 33.333%;
+width: 33.333%;
 }
 
 .grid-item {
-  float: left;
+float: left;
 }
 
 .grid-item img {
-  display: block;
-  width: 100%;
+display: block;
+width: 100%;
 }
 
+header h1 {
+font-size: 200%;
+color:rgb(82, 81, 81);
+text-shadow: 1px 1px 5px rgb(255, 255, 255);
+font-weight:lighter;
+}
+header {
+background-color: #ffffff;
+}
+html {
+background-color: rgb(207, 202, 197);
+font-family: 'M PLUS 1 Code', sans-serif;
+height: 100%;
+}
 
+#search-btn {
+width: 100%;
+margin: 1%;
+height: 70px;
+color: black;
+border-color: black;
+}
+#search-btn:hover {
+color: white;
+background-color: rgb(146, 202, 116);
+}
 
+#save-btn{
+width: 100%;
+margin: 1%;
+background-color: white;
+}
+
+#save-btn:hover {
+color: rgb(255, 255, 255);
+background-color: rgb(17, 104, 104);
+}
+
+.trait{
+font-size: 120%;
+}
+
+#adj-container {
+margin: 1%;
+width: 98%;
+}
+
+#noun-container{
+margin: 1%;
+width: 98%;
+}
+
+#story-theme-container{
+margin: 1%;
+width: 98%;
+}
+
+#story-theme {
+position: relative;
+left: 35%;
+top: 50%;
+font-size: 150%;
+}
