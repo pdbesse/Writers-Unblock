@@ -16,18 +16,49 @@ var saveBtn = $("save-btn");
 var portrait = $("#portrait")
 var storyThemes = ["Good vs Evil", "Love", "Redemption", "Courage & Perseverance", "Coming of Age", "Revenge"]
 
+
 // external js: masonry.pkgd.js, imagesloaded.pkgd.js
 
+//comment out 
 // init Masonry after all images have loaded
 var $grid = $('.grid').imagesLoaded(function () {
     $grid.masonry({
         itemSelector: '.grid-item',
         percentPosition: true,
         columnWidth: '.grid-sizer'
+
     });
+
 });
 
+// var $grid = $('.grid').masonry({
+//     itemSelector: '.grid-item',
+//     percentPosition: true,
+//     columnWidth: '.grid-sizer'
+// });
+// $grid.imagesLoaded(function () {
+//     $grid.masonry('layout');
+// }
+
+// )
+
 $("#search-btn").click(function () {
+
+    if (!(portraitCheck.is(":checked")) && !(nameCheck.is(":checked")) && !(nounsCheck.is(":checked")) && !(adjCheck.is(":checked")) && !(themeCheck.is(":checked")) && settingCheck.val() == "blank") {
+        console.log("no input search was requested")
+        $( "#dialog" ).dialog({
+            autoOpen: false,
+            show: {
+                effect: "blind",
+                duration: 500
+            },
+            hide: {
+                effect: "explode",
+                duration: 500
+            }
+        });
+        $( "#dialog" ).dialog( "open" )
+    }
     if (portraitCheck.is(":checked")) {
         /* alert("test"); */
         getPersonPicture();
@@ -46,13 +77,19 @@ $("#search-btn").click(function () {
     if (themeCheck.is(":checked")) {
         getTheme();
     }
-    if (settingCheck.select()) {
-        var elems = [getItemElementWithQuery()];
-        // // make jQuery object
-         var $elems = $( elems );
-        $grid.prepend( $elems ).masonry( 'prepended', $elems );
+    if (settingCheck.val() !== "blank") {
+        console.log("settingCheck.val() !== blank")
+        getItemElementWithQuery(function (imgEl) {
+            // $grid.empty();
+            // $grid.masonry( 'remove', elements)
+            console.log(imgEl)
+            var elems = [imgEl];
+            // make jQuery object
+            var $elems = $(elems);
+            $grid.prepend($elems).masonry('prepended', $elems);
+        });
 
-        /* getItemElementWithQuery(); */
+
     }
 })
 
@@ -90,22 +127,22 @@ function getNouns() {
             'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
         }
     };
-    
-    for (i = 0; i < 3; i++) {
-    fetch('https://wordsapiv1.p.rapidapi.com/words/?random=true&partOfSpeech=noun', options)
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (noundata) {
-            /* console.log(noundata.word);
-            console.log(noundata.results[0].definition); */
 
-            var nounCard = document.createElement("div");
+    for (i = 0; i < 3; i++) {
+        fetch('https://wordsapiv1.p.rapidapi.com/words/?random=true&partOfSpeech=noun', options)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (noundata) {
+                /* console.log(noundata.word);
+                console.log(noundata.results[0].definition); */
+
+                var nounCard = document.createElement("div");
                 nounCard.setAttribute("class", "card, column");
-            $(nounCard).append("<h5 class='card-header'>" + noundata.word + "</h5>");
-            $(nounCard).append("<p class='card-content'>" + noundata.results[0].definition + "</p>");
-            $("#noun-container").append(nounCard);
-        })
+                $(nounCard).append("<h5 class='card-header'>" + noundata.word + "</h5>");
+                $(nounCard).append("<p class='card-content'>" + noundata.results[0].definition + "</p>");
+                $("#noun-container").append(nounCard);
+            })
     }
 }
 
@@ -117,22 +154,22 @@ function getAdjs() {
             'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
         }
     };
-    
-    for (i = 0; i < 3; i++) {
-    fetch('https://wordsapiv1.p.rapidapi.com/words/?random=true&partOfSpeech=adjective', options)
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (adjdata) {
-            /* console.log(adjdata.word);
-            console.log(adjdata.results[0].definition); */
 
-            var adjCard = document.createElement("div");
+    for (i = 0; i < 3; i++) {
+        fetch('https://wordsapiv1.p.rapidapi.com/words/?random=true&partOfSpeech=adjective', options)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (adjdata) {
+                /* console.log(adjdata.word);
+                console.log(adjdata.results[0].definition); */
+
+                var adjCard = document.createElement("div");
                 adjCard.setAttribute("class", "card, column");
-            $(adjCard).append("<h5 class='card-header'>" + adjdata.word + "</h5>");
-            $(adjCard).append("<p class='card-content'>" + adjdata.results[0].definition + "</p>");
-            $("#adj-container").append(adjCard);
-        })
+                $(adjCard).append("<h5 class='card-header'>" + adjdata.word + "</h5>");
+                $(adjCard).append("<p class='card-content'>" + adjdata.results[0].definition + "</p>");
+                $("#adj-container").append(adjCard);
+            })
     }
 }
 
@@ -163,16 +200,16 @@ function getTheme() {
     var accessKey = "vNp_yDUN4379mM9W7GXhDe7zPCQf4EFeAtidDbMYbEE";
     var settingsQuery = $("#setting").val();
     /* console.log(settingsQuery); */
-   /*  var pageNum = Math.floor(Math.random() * 5);
-    var settingPicURL = `https://api.unsplash.com/search/photos?&query=${settingsQuery}&page=${pageNum}&client_id=${accessKey}` */
+/*  var pageNum = Math.floor(Math.random() * 5);
+ var settingPicURL = `https://api.unsplash.com/search/photos?&query=${settingsQuery}&page=${pageNum}&client_id=${accessKey}` */
 
-    // need to add Math.random and return multiple objects
-   /*  fetch(settingPicURL).then(function (response) {
-        return response.json();
-    })
-        .then(function (settingdata) {
-            i = Math.floor(Math.random() * settingdata.results.length) */
-            /* console.log(settingdata.results); */
+// need to add Math.random and return multiple objects
+/*  fetch(settingPicURL).then(function (response) {
+     return response.json();
+ })
+     .then(function (settingdata) {
+         i = Math.floor(Math.random() * settingdata.results.length) */
+/* console.log(settingdata.results); */
 /* 
             var settingLink = settingdata.results[i].urls.small;
             var img = document.createElement('img');
@@ -183,12 +220,13 @@ function getTheme() {
     return img;
     } */
 
-function getItemElementWithQuery() {
+function getItemElementWithQuery(cb) {
     var img = document.createElement('img')
-    var $img = $( img )
+    var $img = $(img)
     img.className = 'grid-item'
     var accessKey = "vNp_yDUN4379mM9W7GXhDe7zPCQf4EFeAtidDbMYbEE";
     var settingsQuery = $("#settingCheck").val();
+    console.log($("#settingCheck").val());
     /* console.log(settingsQuery); */
     var pageNum = Math.floor(Math.random() * 30);
     var settingPicURL = `https://api.unsplash.com/search/photos?&query=${settingsQuery}&page=${pageNum}&client_id=${accessKey}`
@@ -199,11 +237,12 @@ function getItemElementWithQuery() {
     })
         .then(function (settingdata) {
             i = Math.floor(Math.random() * settingdata.results.length)
-            console.log(settingdata.results);
+            // console.log(settingdata.results);
             var settingLink = settingdata.results[i].urls.small;
             $img.attr("src", settingLink);
+            cb(img)
+            // return img;
         }
         )
-    return img;
+
 }
-    
