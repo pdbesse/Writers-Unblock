@@ -58,22 +58,12 @@ var $grid = $('.grid').imagesLoaded(function () {
     $grid.masonry({
         itemSelector: '.grid-item',
         percentPosition: true,
+        transitionDuration: '0.2s',
+        initLayout: false,
         columnWidth: '.grid-sizer'
-
     });
 
 });
-
-// var $grid = $('.grid').masonry({
-//     itemSelector: '.grid-item',
-//     percentPosition: true,
-//     columnWidth: '.grid-sizer'
-// });
-// $grid.imagesLoaded(function () {
-//     $grid.masonry('layout');
-// }
-
-// )
 
 $("#search-btn").click(function () {
     document.getElementById('result-container').className += " is-hidden";
@@ -82,15 +72,15 @@ $("#search-btn").click(function () {
         $("#dialog").dialog({
             title: "Invalid Input ",
             autoOpen: false,
-            width: 470,
-            height: 200,
+            width: 350,
+            height: 100,
             modal: true,
             draggable: false,
             resizable: false,
             closeOnEscape: false,
             show: {
                 effect: "blind",
-                duration: 500
+                duration: 10
             },
             hide: {
                 effect: "explode",
@@ -137,14 +127,18 @@ $("#search-btn").click(function () {
             var elems = [imgEl];
             // make jQuery object
             var $elems = $(elems);
+
             $grid.prepend($elems).masonry('prepended', $elems);
+            // $grid.masonry('layout');
 
         });
         document.getElementById('grid-container').className -= "is-hidden";
         settingCheck.val("blank").change();
 
+
     }
     document.getElementById('result-container').className -= " is-hidden";
+    $grid.masonry('layout');
 })
 
 
@@ -285,3 +279,7 @@ function getItemElementWithQuery(cb) {
         )
 
 }
+
+setInterval(function(){
+    $grid.masonry('layout');
+},1)
