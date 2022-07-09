@@ -33,13 +33,19 @@ var promptObjLS = {
     noun3: "",
     noundef3: "",
     theme: "",
-    setting: "",
-    setting: "",
-    setting: ""
+    setting1: "",
+    setting2: "",
+    setting3: ""
 }
 
 $("#save-btn").click(function () {
-    localStorage.setItem("prompt", JSON.stringify(promptObjLS));
+    // if there is no prompt already in local storage
+    if (!localStorage.getItem("prompt")) {
+        localStorage.setItem("prompt", JSON.stringify(promptObjLS));
+    } else {
+        console.log("There is already a locally stored prompt object")
+    }
+
     console.log(promptObjLS);
 })
 
@@ -73,8 +79,15 @@ $("#search-btn").click(function () {
     document.getElementById('result-container').className += " is-hidden";
     if (!(portraitCheck.is(":checked")) && !(nameCheck.is(":checked")) && !(nounsCheck.is(":checked")) && !(adjCheck.is(":checked")) && !(themeCheck.is(":checked")) && settingCheck.val() == "blank") {
         console.log("no input search was requested")
-        $( "#dialog" ).dialog({
+        $("#dialog").dialog({
+            title: "Invalid Input ",
             autoOpen: false,
+            width: 470,
+            height: 200,
+            modal: true,
+            draggable: false,
+            resizable: false,
+            closeOnEscape: false,
             show: {
                 effect: "blind",
                 duration: 500
@@ -84,8 +97,8 @@ $("#search-btn").click(function () {
                 duration: 500
             }
         });
-        $( "#dialog" ).dialog( "open" )
-        
+        $("#dialog").dialog("open")
+
     }
     if (portraitCheck.is(":checked")) {
         /* alert("test"); */
@@ -245,7 +258,7 @@ function getTheme() {
 
 
 
-
+// function with a callback function to wait for image to return before using it
 function getItemElementWithQuery(cb) {
     var img = document.createElement('img')
     var $img = $(img)
