@@ -68,6 +68,14 @@ var $grid = $('.grid').imagesLoaded(function () {
 
 });
 
+// remove clicked items from masonry
+$grid.on( 'click', '.grid-item', function() {
+    // remove clicked element
+    $grid.masonry( 'remove', this )
+      // layout remaining item elements
+      .masonry('layout');
+  });
+
 $("#search-btn").click(function () {
     document.getElementById('result-container').className += " is-hidden";
     if (!(portraitCheck.is(":checked")) && !(nameCheck.is(":checked")) && !(nounsCheck.is(":checked")) && !(adjCheck.is(":checked")) && !(themeCheck.is(":checked")) && settingCheck.val() == "blank") {
