@@ -33,13 +33,22 @@ var promptObjLS = {
     noun3: "",
     noundef3: "",
     theme: "",
-    setting: "",
-    setting: "",
-    setting: ""
+    setting1: "",
+    setting2: "",
+    setting3: "",
+    settingArray: []
 }
 
 $("#save-btn").click(function () {
-    localStorage.setItem("prompt", JSON.stringify(promptObjLS));
+    // if there is no prompt already in local storage
+    if (!localStorage.getItem("prompt")) {
+        localStorage.setItem("prompt", JSON.stringify(promptObjLS));
+    } else {
+        console.log("There is already a locally stored prompt object")
+    }
+    //gets current grid of images and saves them as an array of img.grid-item elements
+    var elems = $grid.masonry('getItemElements')
+    promptObjLS['settingArray'] = elems;
     console.log(promptObjLS);
 })
 
@@ -52,40 +61,45 @@ var $grid = $('.grid').imagesLoaded(function () {
     $grid.masonry({
         itemSelector: '.grid-item',
         percentPosition: true,
+        transitionDuration: '0.8s',
+        initLayout: false,
         columnWidth: '.grid-sizer'
-
     });
 
 });
 
-// var $grid = $('.grid').masonry({
-//     itemSelector: '.grid-item',
-//     percentPosition: true,
-//     columnWidth: '.grid-sizer'
-// });
-// $grid.imagesLoaded(function () {
-//     $grid.masonry('layout');
-// }
-
-// )
+// remove clicked items from masonry
+$grid.on( 'click', '.grid-item', function() {
+    // remove clicked element
+    $grid.masonry( 'remove', this )
+      // layout remaining item elements
+      .masonry('layout');
+  });
 
 $("#search-btn").click(function () {
     document.getElementById('result-container').className += " is-hidden";
     if (!(portraitCheck.is(":checked")) && !(nameCheck.is(":checked")) && !(nounsCheck.is(":checked")) && !(adjCheck.is(":checked")) && !(themeCheck.is(":checked")) && settingCheck.val() == "blank") {
         console.log("no input search was requested")
-        $( "#dialog" ).dialog({
+        $("#dialog").dialog({
+            title: "Invalid Input ",
             autoOpen: false,
+            width: 350,
+            height: 100,
+            modal: true,
+            draggable: false,
+            resizable: false,
+            closeOnEscape: false,
             show: {
                 effect: "blind",
-                duration: 500
+                duration: 10
             },
             hide: {
                 effect: "explode",
                 duration: 500
             }
         });
-        $( "#dialog" ).dialog( "open" )
-        
+        $("#dialog").dialog("open")
+
     }
     if (portraitCheck.is(":checked")) {
         /* alert("test"); */
@@ -101,13 +115,13 @@ $("#search-btn").click(function () {
     if (nounsCheck.is(":checked")) {
         $("#noun-container").empty();
         getNouns();
-        document.getElementById('noun-container').className -= "is-hidden";
+        document.getElementById('noun-container-hide').className -= "is-hidden";
         nounsCheck.prop('checked', false);
     }
     if (adjCheck.is(":checked")) {
         $("#adj-container").empty();
         getAdjs();
-        document.getElementById('adj-container').className -= "is-hidden";
+        document.getElementById('adj-container-hide').className -= "is-hidden";
         adjCheck.prop('checked', false);
     }
     if (themeCheck.is(":checked")) {
@@ -124,14 +138,18 @@ $("#search-btn").click(function () {
             var elems = [imgEl];
             // make jQuery object
             var $elems = $(elems);
+
             $grid.prepend($elems).masonry('prepended', $elems);
+            // $grid.masonry('layout');
 
         });
         document.getElementById('grid-container').className -= "is-hidden";
         settingCheck.val("blank").change();
 
+
     }
     document.getElementById('result-container').className -= " is-hidden";
+    $grid.masonry('layout');
 })
 
 
@@ -245,7 +263,7 @@ function getTheme() {
 
 
 
-
+// function with a callback function to wait for image to return before using it
 function getItemElementWithQuery(cb) {
     var img = document.createElement('img')
     var $img = $(img)
@@ -272,3 +290,7 @@ function getItemElementWithQuery(cb) {
         )
 
 }
+
+setInterval(function(){
+    $grid.masonry('layout');
+},1)
