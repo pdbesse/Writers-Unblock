@@ -39,6 +39,27 @@ var promptObjLS = {
     settingArray: []
 }
 
+//generate 3 more images for setting
+$("#more-btn").click(function () {
+    if(settingCheck.val() !== "blank"){
+    for (var i = 0; i < 3; i++) {
+        getItemElementWithQuery(function (imgEl) {
+            // $grid.empty();
+            // $grid.masonry( 'remove', elements)
+            console.log(imgEl)
+            var elems = [imgEl];
+            // make jQuery object
+            var $elems = $(elems);
+
+            $grid.prepend($elems).masonry('prepended', $elems);
+            // $grid.masonry('layout');
+
+        });
+    }
+    document.getElementById('result-container').className -= " is-hidden";
+}
+})
+
 $("#save-btn").click(function () {
     // if there is no prompt already in local storage
     if (!localStorage.getItem("prompt")) {
@@ -69,12 +90,12 @@ var $grid = $('.grid').imagesLoaded(function () {
 });
 
 // remove clicked items from masonry
-$grid.on( 'click', '.grid-item', function() {
+$grid.on('click', '.grid-item', function () {
     // remove clicked element
-    $grid.masonry( 'remove', this )
-      // layout remaining item elements
-      .masonry('layout');
-  });
+    $grid.masonry('remove', this)
+        // layout remaining item elements
+        .masonry('layout');
+});
 
 $("#search-btn").click(function () {
     document.getElementById('result-container').className += " is-hidden";
@@ -144,7 +165,7 @@ $("#search-btn").click(function () {
 
         });
         document.getElementById('grid-container').className -= "is-hidden";
-        settingCheck.val("blank").change();
+        // settingCheck.val("blank").change();
 
 
     }
@@ -291,6 +312,6 @@ function getItemElementWithQuery(cb) {
 
 }
 
-setInterval(function(){
+setInterval(function () {
     $grid.masonry('layout');
-},1)
+}, 1)
