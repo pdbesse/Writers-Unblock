@@ -93,14 +93,14 @@ var $grid = $('.grid').imagesLoaded(function () {
 // remove clicked items from masonry
 $grid.on('click', '.grid-item', function () {
     console.log($grid.masonry('getItemElements').length);
-    if ($grid.masonry('getItemElements').length == 1){
+    if ($grid.masonry('getItemElements').length == 1) {
         document.getElementById('note').className += " is-hidden";
     }
 
-        // remove clicked element
-        $grid.masonry('remove', this)
-            // layout remaining item elements
-            .masonry('layout');
+    // remove clicked element
+    $grid.masonry('remove', this)
+        // layout remaining item elements
+        .masonry('layout');
 });
 
 $("#search-btn").click(function () {
@@ -205,7 +205,36 @@ function getPersonPicture() {
 //WordsAPI request
 // noun
 
-function getNouns() {
+// function getNouns() {
+//     const options = {
+//         method: 'GET',
+//         headers: {
+//             'X-RapidAPI-Key': '5310a4a30cmsh92d3fc3f3671101p143a11jsn790aeb586352',
+//             'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
+//         }
+//     };
+
+//     for (i = 0; i < 3; i++) {
+//         fetch('https://wordsapiv1.p.rapidapi.com/words/?random=true&partOfSpeech=noun', options)
+//             .then(function (response) {
+//                 return response.json();
+//             })
+//             .then(function (noundata) {
+//                 // console.log(noundata.word);
+//                 // console.log(noundata.results[0].definition);
+
+//                 var nounCard = document.createElement("div");
+//                 nounCard.setAttribute("class", "card, column");
+//                 $(nounCard).append("<h5 class='card-header'>" + noundata.word + "</h5>");
+//                 $(nounCard).append("<p class='card-content'>" + noundata.results[0].definition + "</p>");
+//                 $("#noun-container").append(nounCard);
+//                 promptObjLS["noun" + i] = noundata.word;
+//                 promptObjLS["noundef" + i] = noundata.results[0].definition;
+//             })
+//     }
+// }
+
+async function getNouns() {
     const options = {
         method: 'GET',
         headers: {
@@ -213,28 +242,62 @@ function getNouns() {
             'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
         }
     };
+    for (i = 1; i < 4; i++) {
+    try {
+        // after this line, our function will wait for the `fetch()` call to be settled
+        // the `fetch()` call will either return a Response or throw an error
+        const response = await fetch('https://wordsapiv1.p.rapidapi.com/words/?random=true&partOfSpeech=noun', options);
+        if (!response.ok) {
+            throw new Error(`HTTP error: ${response.status}`);
+        }
+        // after this line, our function will wait for the `response.json()` call to be settled
+        // the `response.json()` call will either return the parsed JSON object or throw an error
+        const noundata = await response.json();
+        console.log("noun" + i);
+        promptObjLS["noun" + i] = noundata.word;
+        promptObjLS["noundef" + i] = noundata.results[0].definition;
 
-    for (i = 0; i < 3; i++) {
-        fetch('https://wordsapiv1.p.rapidapi.com/words/?random=true&partOfSpeech=noun', options)
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (noundata) {
-                // console.log(noundata.word);
-                // console.log(noundata.results[0].definition);
-
-                var nounCard = document.createElement("div");
-                nounCard.setAttribute("class", "card, column");
-                $(nounCard).append("<h5 class='card-header'>" + noundata.word + "</h5>");
-                $(nounCard).append("<p class='card-content'>" + noundata.results[0].definition + "</p>");
-                $("#noun-container").append(nounCard);
-                promptObjLS["noun" + i] = noundata.word;
-                promptObjLS["noundef" + i] = noundata.results[0].definition;
-            })
+        var nounCard = document.createElement("div");
+        nounCard.setAttribute("class", "card, column");
+        $(nounCard).append("<h5 class='card-header'>" + noundata.word + "</h5>");
+        $(nounCard).append("<p class='card-content'>" + noundata.results[0].definition + "</p>");
+        $("#noun-container").append(nounCard);
+    }
+    catch (error) {
+        console.error(`Could not get products: ${error}`);
     }
 }
+}
 
-function getAdjs() {
+// function getAdjs() {
+//     const options = {
+//         method: 'GET',
+//         headers: {
+//             'X-RapidAPI-Key': '5310a4a30cmsh92d3fc3f3671101p143a11jsn790aeb586352',
+//             'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
+//         }
+//     };
+
+//     for (i = 0; i < 3; i++) {
+//         fetch('https://wordsapiv1.p.rapidapi.com/words/?random=true&partOfSpeech=adjective', options)
+//             .then(function (response) {
+//                 return response.json();
+//             })
+//             .then(function (adjdata) {
+//                 // console.log(adjdata.word);
+//                 // console.log(adjdata.results[0].definition);
+//                 promptObjLS["adjective" + i] = adjdata.word;
+//                 promptObjLS["adjdef" + i] = adjdata.results[0].definition;
+
+//                 var adjCard = document.createElement("div");
+//                 adjCard.setAttribute("class", "card, column");
+//                 $(adjCard).append("<h5 class='card-header'>" + adjdata.word + "</h5>");
+//                 $(adjCard).append("<p class='card-content'>" + adjdata.results[0].definition + "</p>");
+//                 $("#adj-container").append(adjCard);
+//             })
+//     }
+// }
+async function getAdjs() {
     const options = {
         method: 'GET',
         headers: {
@@ -242,26 +305,33 @@ function getAdjs() {
             'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
         }
     };
+    for (i = 1; i < 4; i++) {
+    try {
+        // after this line, our function will wait for the `fetch()` call to be settled
+        // the `fetch()` call will either return a Response or throw an error
+        const response = await fetch('https://wordsapiv1.p.rapidapi.com/words/?random=true&partOfSpeech=adjective', options);
+        if (!response.ok) {
+            throw new Error(`HTTP error: ${response.status}`);
+        }
+        // after this line, our function will wait for the `response.json()` call to be settled
+        // the `response.json()` call will either return the parsed JSON object or throw an error
+        const adjdata = await response.json();
+        console.log("adjective" + i);
+        promptObjLS["adjective" + i] = adjdata.word;
+        promptObjLS["adjdef" + i] = adjdata.results[0].definition;
 
-    for (i = 0; i < 3; i++) {
-        fetch('https://wordsapiv1.p.rapidapi.com/words/?random=true&partOfSpeech=adjective', options)
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (adjdata) {
-                // console.log(adjdata.word);
-                // console.log(adjdata.results[0].definition);
-                promptObjLS["adjective" + i] = adjdata.word;
-                promptObjLS["adjdef" + i] = adjdata.results[0].definition;
-
-                var adjCard = document.createElement("div");
-                adjCard.setAttribute("class", "card, column");
-                $(adjCard).append("<h5 class='card-header'>" + adjdata.word + "</h5>");
-                $(adjCard).append("<p class='card-content'>" + adjdata.results[0].definition + "</p>");
-                $("#adj-container").append(adjCard);
-            })
+        var adjCard = document.createElement("div");
+        adjCard.setAttribute("class", "card, column");
+        $(adjCard).append("<h5 class='card-header'>" + adjdata.word + "</h5>");
+        $(adjCard).append("<p class='card-content'>" + adjdata.results[0].definition + "</p>");
+        $("#adj-container").append(adjCard);
+    }
+    catch (error) {
+        console.error(`Could not get products: ${error}`);
     }
 }
+}
+
 
 // NameFake API request
 
