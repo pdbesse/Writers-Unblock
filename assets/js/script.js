@@ -64,25 +64,29 @@ $("#search-btn").click(function () {
         /* alert("test"); */
         getPersonPicture();
         document.getElementById('portrait-container').className -= "is-hidden";
-        
+        portraitCheck.prop('checked', false);
     }
     if (nameCheck.is(":checked")) {
         getName();
         document.getElementById('name-container').className -= "is-hidden";
+        nameCheck.prop('checked', false);
     }
     if (nounsCheck.is(":checked")) {
         $("#noun-container").empty();
         getNouns();
         document.getElementById('noun-container').className -= "is-hidden";
+        nounsCheck.prop('checked', false);
     }
     if (adjCheck.is(":checked")) {
         $("#adj-container").empty();
         getAdjs();
         document.getElementById('adj-container').className -= "is-hidden";
+        adjCheck.prop('checked', false);
     }
     if (themeCheck.is(":checked")) {
         getTheme();
         document.getElementById('story-container').className -= "is-hidden";
+        themeCheck.prop('checked', false);
     }
     if (settingCheck.val() !== "blank") {
         console.log("settingCheck.val() !== blank")
@@ -94,9 +98,10 @@ $("#search-btn").click(function () {
             // make jQuery object
             var $elems = $(elems);
             $grid.prepend($elems).masonry('prepended', $elems);
+
         });
         document.getElementById('grid-container').className -= "is-hidden";
-
+        settingCheck.val("blank").change();
 
     }
     document.getElementById('result-container').className -= " is-hidden";
