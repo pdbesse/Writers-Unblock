@@ -130,11 +130,11 @@ $("#search-btn").click(function () {
         themeCheck.prop('checked', false);
     }
     if (settingCheck.val() !== "blank") {
-        console.log("settingCheck.val() !== blank")
+            // console.log("settingCheck.val() !== blank")
         getItemElementWithQuery(function (imgEl) {
             // $grid.empty();
             // $grid.masonry( 'remove', elements)
-            console.log(imgEl)
+            // console.log(imgEl)
             var elems = [imgEl];
             // make jQuery object
             var $elems = $(elems);
@@ -168,7 +168,7 @@ function getPersonPicture() {
     })
         .then(function (portraitdata) {
             i = Math.floor(Math.random() * portraitdata.results.length);
-            /* console.log(portraitdata.results); */
+            // console.log(portraitdata.results);
             var portraitLink = portraitdata.results[i].urls.small;
             portrait.attr("src", portraitLink);
             promptObjLS["portrait"] = portraitLink;
@@ -178,7 +178,6 @@ function getPersonPicture() {
 //WordsAPI request
 // noun
 
-// only one random word can be returned per request => run multiple times?
 function getNouns() {
     const options = {
         method: 'GET',
@@ -194,8 +193,8 @@ function getNouns() {
                 return response.json();
             })
             .then(function (noundata) {
-                /* console.log(noundata.word);
-                console.log(noundata.results[0].definition); */
+                // console.log(noundata.word);
+                // console.log(noundata.results[0].definition);
 
                 var nounCard = document.createElement("div");
                 nounCard.setAttribute("class", "card, column");
@@ -223,8 +222,8 @@ function getAdjs() {
                 return response.json();
             })
             .then(function (adjdata) {
-                /* console.log(adjdata.word);
-                console.log(adjdata.results[0].definition); */
+                // console.log(adjdata.word);
+                // console.log(adjdata.results[0].definition);
                 promptObjLS["adjective" + i] = adjdata.word;
                 promptObjLS["adjdef" + i] = adjdata.results[0].definition;
 
@@ -246,10 +245,8 @@ function getName() {
     })
         .then(function (namedata) {
             var name = ((namedata.results[0].name.first) + " " + (namedata.results[0].name.last));
-            globalName = name;
-            console.log(globalName);
-            /* console.log((namedata.results[0].name.first) + " " + (namedata.results[0].name.last)); */
-            /* console.log(name); */
+            // console.log((namedata.results[0].name.first) + " " + (namedata.results[0].name.last));
+            // console.log(name);
             $("#name").text(name);
             promptObjLS["name"] = name;
 
@@ -270,8 +267,8 @@ function getItemElementWithQuery(cb) {
     img.className = 'grid-item'
     var accessKey = "vNp_yDUN4379mM9W7GXhDe7zPCQf4EFeAtidDbMYbEE";
     var settingsQuery = $("#settingCheck").val();
-    console.log($("#settingCheck").val());
-    /* console.log(settingsQuery); */
+    // console.log($("#settingCheck").val());
+    // console.log(settingsQuery);
     var pageNum = Math.floor(Math.random() * 30);
     var settingPicURL = `https://api.unsplash.com/search/photos?&query=${settingsQuery}&page=${pageNum}&client_id=${accessKey}`
 
