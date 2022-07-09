@@ -20,7 +20,7 @@
     <div class="columns" id="page-column">
       <div class="column is-narrow" id="aside-column">
         <div class="box" style="width: 250px;">
-          <p class="text">I want to generate a new character with the following prompts:</p>
+          <h4 class="text">I want new ideas for:</h4>
           <div class="column is-narrow is-flex is-flex-direction-column">
             <label class="checkbox">
               <input type="checkbox" id="nameCheck">
@@ -57,38 +57,43 @@
         </div>
       </div>
       <div class="column" id="prompt-column">
-        <div class="box">
-          <p class="title is-9 has-text-centered" id="name">//random generated name</p>
+        <div id="result-container" class="box is-hidden">
+          <div id="name-container" class="is-hidden">
+            <p class="title is-9 has-text-centered" id="name"></p>
+          </div>
 
-
-          <figure>
+          <figure id="portrait-container" class="is-hidden">
             <img src="https://placehold.jp/30/dd6699/ffffff/300x150.png" id="portrait">
           </figure>
 
 
-          <div>
+          <div id="adj-container" class="is-hidden">
             <h3 class="has-text-centered">Adjectives</h3>
             <div class="box columns" id="adj-container"></div>
           </div>
-          <div>
+          <div id="noun-container" class="is-hidden">
             <h3 class="has-text-centered">Nouns</h3>
             <div class="box columns" id="noun-container"></div>
           </div>
-          <div class="box">
-            <h3 class="has-text-centered">Story Theme</h3>
-            <p class="has-text-centered" id="story-theme"></p>
+          <div id="story-container" class="is-hidden">
+            <div class="box">
+              <h3 class="has-text-centered">Story Theme</h3>
+              <p class="has-text-centered" id="story-theme"></p>
+            </div>
           </div>
-          <div class="box" id="grid-container">
 
-            <!--reference masonry with JQuery $('#grid-layout').masonry() -->
-            <!-- <div class="grid" id="grid-layout" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 200 }'></div> -->
+          <div id="grid-container" class="is-hidden">
+            <div class="box" id="grid-container">
 
-            <div class="grid" id="grid-layout">
-              <div class="grid-sizer"></div>
-              <div class="grid-item">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/one-world-trade.jpg" />
-              </div>
-              <!-- <div class="grid-item">
+              <!--reference masonry with JQuery $('#grid-layout').masonry() -->
+              <!-- <div class="grid" id="grid-layout" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 200 }'></div> -->
+
+              <div class="grid" id="grid-layout">
+                <div class="grid-sizer"></div>
+                <div class="grid-item">
+                  <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/one-world-trade.jpg" />
+                </div>
+                <!-- <div class="grid-item">
                 <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/drizzle.jpg" />
               </div>
               <div class="grid-item">
@@ -100,8 +105,9 @@
               <div class="grid-item">
                 <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/flight-formation.jpg" />
               </div> -->
-            </div>
+              </div>
 
+            </div>
           </div>
         </div>
       </div>
@@ -118,7 +124,7 @@
     </div>
   </div>
 
-   
+
 </body>
 
 </html>
@@ -158,4 +164,3 @@
     <script src="./assets/js/script.js"></script>
   </body>
 </html> -->
-

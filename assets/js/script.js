@@ -43,7 +43,7 @@ var $grid = $('.grid').imagesLoaded(function () {
 // )
 
 $("#search-btn").click(function () {
-
+    document.getElementById('result-container').className += " is-hidden";
     if (!(portraitCheck.is(":checked")) && !(nameCheck.is(":checked")) && !(nounsCheck.is(":checked")) && !(adjCheck.is(":checked")) && !(themeCheck.is(":checked")) && settingCheck.val() == "blank") {
         console.log("no input search was requested")
         $( "#dialog" ).dialog({
@@ -58,24 +58,35 @@ $("#search-btn").click(function () {
             }
         });
         $( "#dialog" ).dialog( "open" )
+        
     }
     if (portraitCheck.is(":checked")) {
         /* alert("test"); */
         getPersonPicture();
+        document.getElementById('portrait-container').className -= "is-hidden";
+        portraitCheck.prop('checked', false);
     }
     if (nameCheck.is(":checked")) {
         getName();
+        document.getElementById('name-container').className -= "is-hidden";
+        nameCheck.prop('checked', false);
     }
     if (nounsCheck.is(":checked")) {
         $("#noun-container").empty();
         getNouns();
+        document.getElementById('noun-container').className -= "is-hidden";
+        nounsCheck.prop('checked', false);
     }
     if (adjCheck.is(":checked")) {
         $("#adj-container").empty();
         getAdjs();
+        document.getElementById('adj-container').className -= "is-hidden";
+        adjCheck.prop('checked', false);
     }
     if (themeCheck.is(":checked")) {
         getTheme();
+        document.getElementById('story-container').className -= "is-hidden";
+        themeCheck.prop('checked', false);
     }
     if (settingCheck.val() !== "blank") {
         console.log("settingCheck.val() !== blank")
@@ -87,10 +98,13 @@ $("#search-btn").click(function () {
             // make jQuery object
             var $elems = $(elems);
             $grid.prepend($elems).masonry('prepended', $elems);
-        });
 
+        });
+        document.getElementById('grid-container').className -= "is-hidden";
+        settingCheck.val("blank").change();
 
     }
+    document.getElementById('result-container').className -= " is-hidden";
 })
 
 
@@ -195,30 +209,7 @@ function getTheme() {
 }
 
 
-/* // create <div class="grid-item"></div>
-  function getItemElementWithQuery() {
-    var accessKey = "vNp_yDUN4379mM9W7GXhDe7zPCQf4EFeAtidDbMYbEE";
-    var settingsQuery = $("#setting").val();
-    /* console.log(settingsQuery); */
-/*  var pageNum = Math.floor(Math.random() * 5);
- var settingPicURL = `https://api.unsplash.com/search/photos?&query=${settingsQuery}&page=${pageNum}&client_id=${accessKey}` */
 
-// need to add Math.random and return multiple objects
-/*  fetch(settingPicURL).then(function (response) {
-     return response.json();
- })
-     .then(function (settingdata) {
-         i = Math.floor(Math.random() * settingdata.results.length) */
-/* console.log(settingdata.results); */
-/* 
-            var settingLink = settingdata.results[i].urls.small;
-            var img = document.createElement('img');
-            img.setAttribute("class", "grid-item");
-            $img.attr("src", settingLink);
-        }
-        )
-    return img;
-    } */
 
 function getItemElementWithQuery(cb) {
     var img = document.createElement('img')
