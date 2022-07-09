@@ -35,7 +35,8 @@ var promptObjLS = {
     theme: "",
     setting1: "",
     setting2: "",
-    setting3: ""
+    setting3: "",
+    settingArray: []
 }
 
 $("#save-btn").click(function () {
@@ -45,7 +46,9 @@ $("#save-btn").click(function () {
     } else {
         console.log("There is already a locally stored prompt object")
     }
-
+    //gets current grid of images and saves them as an array of img.grid-item elements
+    var elems = $grid.masonry('getItemElements')
+    promptObjLS['settingArray'] = elems;
     console.log(promptObjLS);
 })
 
@@ -58,7 +61,7 @@ var $grid = $('.grid').imagesLoaded(function () {
     $grid.masonry({
         itemSelector: '.grid-item',
         percentPosition: true,
-        transitionDuration: '0.2s',
+        transitionDuration: '0.8s',
         initLayout: false,
         columnWidth: '.grid-sizer'
     });
