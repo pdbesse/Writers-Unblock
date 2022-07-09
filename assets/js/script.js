@@ -15,6 +15,7 @@ var searchBtn = $("#search-btn");
 var saveBtn = $("save-btn");
 var portrait = $("#portrait")
 var storyThemes = ["Good vs Evil", "Love", "Redemption", "Courage & Perseverance", "Coming of Age", "Revenge"]
+var settingNote = $("#note");
 
 var promptObjLS = {
     promptid: "",
@@ -41,23 +42,23 @@ var promptObjLS = {
 
 //generate 3 more images for setting
 $("#more-btn").click(function () {
-    if(settingCheck.val() !== "blank"){
-    for (var i = 0; i < 3; i++) {
-        getItemElementWithQuery(function (imgEl) {
-            // $grid.empty();
-            // $grid.masonry( 'remove', elements)
-            console.log(imgEl)
-            var elems = [imgEl];
-            // make jQuery object
-            var $elems = $(elems);
+    if (settingCheck.val() !== "blank") {
+        for (var i = 0; i < 3; i++) {
+            getItemElementWithQuery(function (imgEl) {
+                // $grid.empty();
+                // $grid.masonry( 'remove', elements)
+                console.log(imgEl)
+                var elems = [imgEl];
+                // make jQuery object
+                var $elems = $(elems);
 
-            $grid.prepend($elems).masonry('prepended', $elems);
-            // $grid.masonry('layout');
+                $grid.prepend($elems).masonry('prepended', $elems);
+                // $grid.masonry('layout');
 
-        });
+            });
+        }
+        document.getElementById('result-container').className -= " is-hidden";
     }
-    document.getElementById('result-container').className -= " is-hidden";
-}
 })
 
 $("#save-btn").click(function () {
@@ -91,10 +92,15 @@ var $grid = $('.grid').imagesLoaded(function () {
 
 // remove clicked items from masonry
 $grid.on('click', '.grid-item', function () {
-    // remove clicked element
-    $grid.masonry('remove', this)
-        // layout remaining item elements
-        .masonry('layout');
+    console.log($grid.masonry('getItemElements').length);
+    if ($grid.masonry('getItemElements').length == 1){
+        document.getElementById('note').className += " is-hidden";
+    }
+
+        // remove clicked element
+        $grid.masonry('remove', this)
+            // layout remaining item elements
+            .masonry('layout');
 });
 
 $("#search-btn").click(function () {
@@ -151,7 +157,7 @@ $("#search-btn").click(function () {
         themeCheck.prop('checked', false);
     }
     if (settingCheck.val() !== "blank") {
-            // console.log("settingCheck.val() !== blank")
+        // console.log("settingCheck.val() !== blank")
         getItemElementWithQuery(function (imgEl) {
             // $grid.empty();
             // $grid.masonry( 'remove', elements)
