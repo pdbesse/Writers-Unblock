@@ -16,6 +16,33 @@ var saveBtn = $("save-btn");
 var portrait = $("#portrait")
 var storyThemes = ["Good vs Evil", "Love", "Redemption", "Courage & Perseverance", "Coming of Age", "Revenge"]
 
+var promptObjLS = {
+    promptid: "",
+    name: "",
+    portrait: "",
+    adjective1: "",
+    adjdef1: "",
+    adjective2: "",
+    adjdef2: "",
+    adjective3: "",
+    adjdef3: "",
+    noun1: "",
+    noundef1: "",
+    noun2: "",
+    noundef2: "",
+    noun3: "",
+    noundef3: "",
+    theme: "",
+    setting: "",
+    setting: "",
+    setting: ""
+}
+
+$("#save-btn").click(function () {
+    localStorage.setItem("prompt", JSON.stringify(promptObjLS));
+    console.log(promptObjLS);
+})
+
 
 // external js: masonry.pkgd.js, imagesloaded.pkgd.js
 
@@ -112,6 +139,7 @@ function getPersonPicture() {
             /* console.log(portraitdata.results); */
             var portraitLink = portraitdata.results[i].urls.small;
             portrait.attr("src", portraitLink);
+            promptObjLS["portrait"] = portraitLink;
         })
 }
 
@@ -142,6 +170,8 @@ function getNouns() {
                 $(nounCard).append("<h5 class='card-header'>" + noundata.word + "</h5>");
                 $(nounCard).append("<p class='card-content'>" + noundata.results[0].definition + "</p>");
                 $("#noun-container").append(nounCard);
+                promptObjLS["noun" + i] = noundata.word;
+                promptObjLS["noundef" + i] = noundata.results[0].definition;
             })
     }
 }
@@ -163,6 +193,8 @@ function getAdjs() {
             .then(function (adjdata) {
                 /* console.log(adjdata.word);
                 console.log(adjdata.results[0].definition); */
+                promptObjLS["adjective" + i] = adjdata.word;
+                promptObjLS["adjdef" + i] = adjdata.results[0].definition;
 
                 var adjCard = document.createElement("div");
                 adjCard.setAttribute("class", "card, column");
@@ -182,9 +214,12 @@ function getName() {
     })
         .then(function (namedata) {
             var name = ((namedata.results[0].name.first) + " " + (namedata.results[0].name.last));
+            globalName = name;
+            console.log(globalName);
             /* console.log((namedata.results[0].name.first) + " " + (namedata.results[0].name.last)); */
             /* console.log(name); */
             $("#name").text(name);
+            promptObjLS["name"] = name;
 
         })
 }
