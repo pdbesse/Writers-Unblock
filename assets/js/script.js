@@ -27,9 +27,6 @@ var promptObjLS = {
     noun3: "",
     noundef3: "",
     theme: "",
-    setting1: "",
-    setting2: "",
-    setting3: "",
     settingArray: []
 }
 
@@ -59,13 +56,23 @@ $("#save-btn").click(function () {
     if (!localStorage.getItem("prompt")) {
         localStorage.setItem("prompt", JSON.stringify(promptObjLS));
     } else {
+        // implement saving multiple prompt choices
+        localStorage.setItem("prompt", JSON.stringify(promptObjLS));
         console.log("There is already a locally stored prompt object")
     }
     var adjContainer = document.getElementById("adj-container");
-    var numberOfAdjChildren = adjContainer.getElementsByTagName('*').length
+
     for (i = 1; i < 4; i++) {
-        promptObjLS["noun" + i] = noundata.word;
-        promptObjLS["noundef" + i] = noundata.results[0].definition;
+        
+        promptObjLS["adjective" + i] = adjContainer.children[i-1].children[0].textContent;
+        promptObjLS["adjdef" + i] = adjContainer.children[i-1].children[1].textContent;
+    }
+    var nounContainer = document.getElementById("noun-container");
+
+    for (i = 1; i < 4; i++) {
+        
+        promptObjLS["noun" + i] = nounContainer.children[i-1].children[0].textContent;
+        promptObjLS["noundef" + i] = nounContainer.children[i-1].children[1].textContent;
     }
     //gets current grid of images and saves them as an array of img.grid-item elements
     var elems = $grid.masonry('getItemElements')
@@ -360,6 +367,7 @@ function getName() {
 function getTheme() {
     var i = Math.floor(Math.random() * storyThemes.length);
     $("#story-theme").text(storyThemes[i]);
+    promptObjLS["theme"] = storyThemes[i];
 }
 
 
