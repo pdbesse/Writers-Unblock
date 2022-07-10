@@ -18,19 +18,27 @@ h1 {
     font-size: 60px;
 }
 
-.mid-screen h2 {
-    font-weight: bold;
-    color: white;
-    padding: 10px;
-}
-
 .mid-screen{
     position: fixed;
     top: 50%;
     left: 40%;
+    right: 40%;
 }
 
 .huge{
     position: relative;
     height: 100%;
+}
+
+section {
+    background-color: rgb(23, 27, 27);
+    border-radius: 25px;
+}
+.mid-screen h2 {
+    font-weight: bold;
+    color: white;
+    padding-bottom: 2px;
+    padding-top: 3px;
+    opacity: 100%;
+    font-size: 140%;
 }
