@@ -60,9 +60,6 @@ color:rgb(82, 81, 81);
 text-shadow: 1px 1px 5px rgb(255, 255, 255);
 font-weight:lighter;
 }
-header {
-background-color: #ffffff;
-}
 
 html {
 background-color: rgb(207, 202, 197);
@@ -123,8 +120,8 @@ h3 {
 }
 
 .left-box {
-  margin-left: 4%;
-  margin-top: 10%;
+    position: fixed;
+    margin-left: 5px;
 }
 
 .gen-button {
@@ -134,4 +131,20 @@ h3 {
 .tops{
   background-color: rgb(251, 251, 251);
   margin-bottom: 2%;
+  border-bottom: 1px solid black;
+}
+
+.left-box-invis{
+  margin-left: 4%;
+  margin-top: 10%;
+  background-color: rgb(207, 202, 197);
+  box-shadow: 1px 1px 1px rgb(207, 202, 197);
+}
+
+@media only screen and (max-width: 769px){
+  .left-box{
+    position: relative;
+    margin-left: 4%;
+    margin-top: 10%;
+  }
 }
