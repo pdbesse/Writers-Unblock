@@ -98,7 +98,7 @@ $grid.on('click', '.grid-item', function () {
 
 $("#search-btn").click(function () {
     document.getElementById('result-container').className += " is-hidden";
-    if (!(portraitCheck.is(":checked")) && (nameCheck.val() == "blank") && !(nounsCheck.is(":checked")) && !(adjCheck.is(":checked")) && !(themeCheck.is(":checked")) && (settingCheck.val() == "blank")) {
+    if ((portraitCheck.val() == "blank") && (nameCheck.val() == "blank") && !(nounsCheck.is(":checked")) && !(adjCheck.is(":checked")) && !(themeCheck.is(":checked")) && (settingCheck.val() == "blank")) {
         // console.log("no input search was requested")
         $("#dialog").dialog({
             title: "Invalid Input ",
@@ -121,10 +121,11 @@ $("#search-btn").click(function () {
         $("#dialog").dialog("open")
 
     }
-    if (portraitCheck.is(":checked")) {
+    if (portraitCheck.val() !== "blank") {
         /* alert("test"); */
         getPersonPicture();
         document.getElementById('portrait-container').className -= "is-hidden";
+        portraitCheck.prop('checked', false);
     }
     if (nameCheck.val() !== "blank") {
         getName();
@@ -177,9 +178,11 @@ $("#search-btn").click(function () {
 
 function getPersonPicture() {
     var accessKey = "vNp_yDUN4379mM9W7GXhDe7zPCQf4EFeAtidDbMYbEE";
+    var portraitGender = portraitCheck.val();
+    // console.log(portraitGender);
     var pageNum = Math.floor(Math.random() * 5);
 
-    var personPicURL = `https://api.unsplash.com/search/photos?&query=man%20person&per_page=30&page=${pageNum}&client_id=${accessKey}`
+    var personPicURL = `https://api.unsplash.com/search/photos?&query=${portraitGender}%20person&per_page=30&page=${pageNum}&client_id=${accessKey}`
 
     // need to add Math.random and return multiple objects
     fetch(personPicURL).then(function (response) {
