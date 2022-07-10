@@ -11,10 +11,10 @@ html {
 #unblock-btn {
     position: fixed;
     background-color: #c4c2c2a5;
+    color: black;
     bottom: 10%;
     right: 10%;
     font-size: 30px;
-
     text-align: center;
     cursor: pointer;
 
