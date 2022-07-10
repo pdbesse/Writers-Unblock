@@ -63,9 +63,9 @@ $("#save-btn").click(function () {
     }
     var adjContainer = document.getElementById("adj-container");
     var numberOfAdjChildren = adjContainer.getElementsByTagName('*').length
-    for(i=1; i< 4; i++){
-                        promptObjLS["noun" + i] = noundata.word;
-                promptObjLS["noundef" + i] = noundata.results[0].definition;
+    for (i = 1; i < 4; i++) {
+        promptObjLS["noun" + i] = noundata.word;
+        promptObjLS["noundef" + i] = noundata.results[0].definition;
     }
     //gets current grid of images and saves them as an array of img.grid-item elements
     var elems = $grid.masonry('getItemElements')
