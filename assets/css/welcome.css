@@ -11,8 +11,26 @@ html {
     bottom: 10%;
     right: 10%;
     font-size: 30px;
+    border-color: white;
 }
 
 h1 {
     font-size: 60px;
+}
+
+.mid-screen h2 {
+    font-weight: bold;
+    color: white;
+    padding: 10px;
+}
+
+.mid-screen{
+    position: fixed;
+    top: 50%;
+    left: 40%;
+}
+
+.huge{
+    position: relative;
+    height: 100%;
 }
