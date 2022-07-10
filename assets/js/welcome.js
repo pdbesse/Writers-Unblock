@@ -3,7 +3,7 @@ $(document).ready(getWelcomeBackground);
 var background = $("html");
 
 $("#unblock-btn").click(function () {
-    document.location = "index.html"
+    document.location = "prompt-page.html"
     }
 )
 

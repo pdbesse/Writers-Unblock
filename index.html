@@ -1,114 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class=".html">
 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-  <link rel="stylesheet" href="./assets/css/style.css">
-  <title>Spark Your Creativity!</title>
+  <link rel="stylesheet" href="./assets/css/welcome.css">
+  <title>Welcome to Writer's Unblock</title>
 </head>
 
 <body>
   <div class="content">
-
     <div class="column is-full">
-      <h1>WRITER'S UNBLOCK</h1>
+      <h1 class="column-is-one-quarter has-text-white has-text-centered is-vcentered">WRITER'S UNBLOCK</h1>
     </div>
 
-    <div class="columns" id="page-column">
-      <div class="column is-narrow" id="aside-column">
-        <div class="box" style="width: 250px;">
-          <h4 class="text">I want new ideas for:</h4>
-          <div class="column is-narrow is-flex is-flex-direction-column">
-            <label class="checkbox">
-              <input type="checkbox" id="nameCheck">
-              Name
-            </label>
-            <label class="checkbox">
-              <input type="checkbox" id="portraitCheck">
-              Portrait
-            </label>
-            <label class="checkbox">
-              <input type="checkbox" id="adjCheck">
-              Adjectives
-            </label>
-            <label class="checkbox">
-              <input type="checkbox" id="nounsCheck">
-              Nouns
-            </label>
-            <label class="checkbox">
-              <input type="checkbox" id="storyCheck">
-              Story Theme
-            </label>
-            <label for="setting-menu">Select a story setting:</label>
-            <select name="setting-menu" id="settingCheck">
-              <option value="blank"></option>
-              <option value="fantasy">Fantasy</option>
-              <option value="future-city">Future</option>
-              <option value="cyberpunk">Cyberpunk</option>
-              <option value="historical">Historical</option>
-              <option value="modern">Modern</option>
-            </select>
-          </div>
-          <button type="submit" id="search-btn" class="button is-primary is-outlined is-large">Unblock!</button>
-          <button type="submit" id="more-btn" class="button is-info is-outlined is-small mt-2">Add 3 more settings</button>
-          <button type="submit" id="save-btn" class="button is-link is-outlined is-medium mt-5">Save Prompt</button>
-        </div>
-      </div>
-      <div class="column" id="prompt-column">
-        <div id="result-container" class="box is-hidden">
-          <div id="name-container" class="is-hidden">
-            <p class="title is-9 has-text-centered" id="name"></p>
-          </div>
+    <button type="submit" id="unblock-btn" class="button is-primary is-outlined">Unblock!</button>
+          
 
-          <figure id="portrait-container" class="is-hidden">
-            <img src="https://placehold.jp/30/dd6699/ffffff/300x150.png" id="portrait">
-          </figure>
-
-
-          <div id="adj-container-hide" class="is-hidden">
-            <h3 class="has-text-centered">Adjectives</h3>
-            <div class="box columns" id="adj-container"></div>
-          </div>
-          <div id="noun-container-hide" class="is-hidden">
-            <h3 class="has-text-centered">Nouns</h3>
-            <div class="box columns" id="noun-container"></div>
-          </div>
-          <div id="story-container" class="is-hidden">
-            <div class="box">
-              <h3 class="has-text-centered">Story Theme</h3>
-              <p class="has-text-centered" id="story-theme"></p>
-            </div>
-          </div>
-
-          <div id="grid-container" class="is-hidden">
-            <div class="box" id="grid-container">
-              
-              <!--reference masonry with JQuery $('#grid-layout').masonry() -->
-              <!-- <div class="grid" id="grid-layout" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 200 }'></div> -->
-
-              <div class="grid" id="grid-layout">
-                <div class="grid-sizer"></div>
-              </div>
-              <p id="note" class="is-size-6 has-text-centered is-italic">Click an image to remove it.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-  <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
-  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-  <script src="./assets/js/script.js"></script>
-  <div id="dialog-container" class="is-hidden">
-    <div id="dialog" class="box" title="Error! ">
-      <p>Please select at least one prompt option.</p>
-    </div>
-  </div>
+  <script src="./assets/js/welcome.js"></script>
 
 
 </body>
