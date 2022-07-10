@@ -1,10 +1,3 @@
-/*  if #nameCheck is true, run getName and display to label #name
-    if #portraitCheck is true, run getPersonPicture and change src of #portrait
-    if #settingsCHeck is true, run getSettingPicture and display to grid layout
-    if adjCheck is true, run getAdjs and display to #adj1, #adj2, #adj3
-    if nounsCheck is true, run getNouns and display to #noun1, #noun2, #noun3
- */
-
 var nameCheck = $("#nameCheck")
 var portraitCheck = $("#portraitCheck")
 var settingCheck = $("#settingCheck")
@@ -105,8 +98,8 @@ $grid.on('click', '.grid-item', function () {
 
 $("#search-btn").click(function () {
     document.getElementById('result-container').className += " is-hidden";
-    if (!(portraitCheck.is(":checked")) && !(nameCheck.is(":checked")) && !(nounsCheck.is(":checked")) && !(adjCheck.is(":checked")) && !(themeCheck.is(":checked")) && settingCheck.val() == "blank") {
-        console.log("no input search was requested")
+    if (!(portraitCheck.is(":checked")) && (nameCheck.val() == "blank") && !(nounsCheck.is(":checked")) && !(adjCheck.is(":checked")) && !(themeCheck.is(":checked")) && (settingCheck.val() == "blank")) {
+        // console.log("no input search was requested")
         $("#dialog").dialog({
             title: "Invalid Input ",
             autoOpen: false,
@@ -132,9 +125,8 @@ $("#search-btn").click(function () {
         /* alert("test"); */
         getPersonPicture();
         document.getElementById('portrait-container').className -= "is-hidden";
-        portraitCheck.prop('checked', false);
     }
-    if (nameCheck.is(":checked")) {
+    if (nameCheck.val() !== "blank") {
         getName();
         document.getElementById('name-container').className -= "is-hidden";
         nameCheck.prop('checked', false);
@@ -336,7 +328,9 @@ async function getAdjs() {
 // NameFake API request
 
 function getName() {
-    var nameURL = "https://randomuser.me/api/?nat=us";
+    var nameGender = nameCheck.val();
+    console.log(nameGender);
+    var nameURL = `https://randomuser.me/api/?gender=${nameGender}&nat=us`;
     fetch(nameURL).then(function (response) {
         return response.json();
     })
