@@ -27,9 +27,6 @@ var promptObjLS = {
     noun3: "",
     noundef3: "",
     theme: "",
-    setting1: "",
-    setting2: "",
-    setting3: "",
     settingArray: []
 }
 
@@ -59,7 +56,23 @@ $("#save-btn").click(function () {
     if (!localStorage.getItem("prompt")) {
         localStorage.setItem("prompt", JSON.stringify(promptObjLS));
     } else {
+        // implement saving multiple prompt choices
+        localStorage.setItem("prompt", JSON.stringify(promptObjLS));
         console.log("There is already a locally stored prompt object")
+    }
+    var adjContainer = document.getElementById("adj-container");
+
+    for (i = 1; i < 4; i++) {
+        
+        promptObjLS["adjective" + i] = adjContainer.children[i-1].children[0].textContent;
+        promptObjLS["adjdef" + i] = adjContainer.children[i-1].children[1].textContent;
+    }
+    var nounContainer = document.getElementById("noun-container");
+
+    for (i = 1; i < 4; i++) {
+        
+        promptObjLS["noun" + i] = nounContainer.children[i-1].children[0].textContent;
+        promptObjLS["noundef" + i] = nounContainer.children[i-1].children[1].textContent;
     }
     //gets current grid of images and saves them as an array of img.grid-item elements
     var elems = $grid.masonry('getItemElements')
@@ -126,11 +139,13 @@ $("#search-btn").click(function () {
         getPersonPicture();
         document.getElementById('portrait-container').className -= "is-hidden";
         portraitCheck.prop('checked', false);
+        portraitCheck.val("blank").change();
     }
     if (nameCheck.val() !== "blank") {
         getName();
         document.getElementById('name-container').className -= "is-hidden";
         nameCheck.prop('checked', false);
+        nameCheck.val("blank").change();
     }
     if (nounsCheck.is(":checked")) {
         $("#noun-container").empty();
@@ -200,36 +215,36 @@ function getPersonPicture() {
 //WordsAPI request
 // noun
 
-// function getNouns() {
-//     const options = {
-//         method: 'GET',
-//         headers: {
-//             'X-RapidAPI-Key': '5310a4a30cmsh92d3fc3f3671101p143a11jsn790aeb586352',
-//             'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
-//         }
-//     };
+function getNouns() {
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': '5310a4a30cmsh92d3fc3f3671101p143a11jsn790aeb586352',
+            'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
+        }
+    };
 
-//     for (i = 0; i < 3; i++) {
-//         fetch('https://wordsapiv1.p.rapidapi.com/words/?random=true&partOfSpeech=noun', options)
-//             .then(function (response) {
-//                 return response.json();
-//             })
-//             .then(function (noundata) {
-//                 // console.log(noundata.word);
-//                 // console.log(noundata.results[0].definition);
+    for (i = 0; i < 3; i++) {
+        fetch('https://wordsapiv1.p.rapidapi.com/words/?random=true&partOfSpeech=noun', options)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (noundata) {
+                // console.log(noundata.word);
+                // console.log(noundata.results[0].definition);
 
-//                 var nounCard = document.createElement("div");
-//                 nounCard.setAttribute("class", "card, column");
-//                 $(nounCard).append("<h5 class='card-header'>" + noundata.word + "</h5>");
-//                 $(nounCard).append("<p class='card-content'>" + noundata.results[0].definition + "</p>");
-//                 $("#noun-container").append(nounCard);
-//                 promptObjLS["noun" + i] = noundata.word;
-//                 promptObjLS["noundef" + i] = noundata.results[0].definition;
-//             })
-//     }
-// }
+                var nounCard = document.createElement("div");
+                nounCard.setAttribute("class", "card, column");
+                $(nounCard).append("<h5 class='card-header'>" + noundata.word + "</h5>");
+                $(nounCard).append("<p class='card-content'>" + noundata.results[0].definition + "</p>");
+                $("#noun-container").append(nounCard);
+                // promptObjLS["noun" + i] = noundata.word;
+                // promptObjLS["noundef" + i] = noundata.results[0].definition;
+            })
+    }
+}
 
-async function getNouns() {
+async function getNounsAsync() {
     const options = {
         method: 'GET',
         headers: {
@@ -238,61 +253,61 @@ async function getNouns() {
         }
     };
     for (i = 1; i < 4; i++) {
-    try {
-        // after this line, our function will wait for the `fetch()` call to be settled
-        // the `fetch()` call will either return a Response or throw an error
-        const response = await fetch('https://wordsapiv1.p.rapidapi.com/words/?random=true&partOfSpeech=noun', options);
-        if (!response.ok) {
-            throw new Error(`HTTP error: ${response.status}`);
+        try {
+            // after this line, our function will wait for the `fetch()` call to be settled
+            // the `fetch()` call will either return a Response or throw an error
+            const response = await fetch('https://wordsapiv1.p.rapidapi.com/words/?random=true&partOfSpeech=noun', options);
+            if (!response.ok) {
+                throw new Error(`HTTP error: ${response.status}`);
+            }
+            // after this line, our function will wait for the `response.json()` call to be settled
+            // the `response.json()` call will either return the parsed JSON object or throw an error
+            const noundata = await response.json()
+            console.log("noun" + i);
+            promptObjLS["noun" + i] = noundata.word;
+            promptObjLS["noundef" + i] = noundata.results[0].definition;
+
+            var nounCard = document.createElement("div");
+            nounCard.setAttribute("class", "card, column");
+            $(nounCard).append("<h5 class='card-header'>" + noundata.word + "</h5>");
+            $(nounCard).append("<p class='card-content'>" + noundata.results[0].definition + "</p>");
+            $("#noun-container").append(nounCard);
         }
-        // after this line, our function will wait for the `response.json()` call to be settled
-        // the `response.json()` call will either return the parsed JSON object or throw an error
-        const noundata = await response.json();
-        console.log("noun" + i);
-        promptObjLS["noun" + i] = noundata.word;
-        promptObjLS["noundef" + i] = noundata.results[0].definition;
-
-        var nounCard = document.createElement("div");
-        nounCard.setAttribute("class", "card, column");
-        $(nounCard).append("<h5 class='card-header'>" + noundata.word + "</h5>");
-        $(nounCard).append("<p class='card-content'>" + noundata.results[0].definition + "</p>");
-        $("#noun-container").append(nounCard);
-    }
-    catch (error) {
-        console.error(`Could not get products: ${error}`);
+        catch (error) {
+            console.error(`Could not get products: ${error}`);
+        }
     }
 }
+
+function getAdjs() {
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': '5310a4a30cmsh92d3fc3f3671101p143a11jsn790aeb586352',
+            'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
+        }
+    };
+
+    for (i = 0; i < 3; i++) {
+        fetch('https://wordsapiv1.p.rapidapi.com/words/?random=true&partOfSpeech=adjective', options)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (adjdata) {
+                // console.log(adjdata.word);
+                // console.log(adjdata.results[0].definition);
+                // promptObjLS["adjective" + i] = adjdata.word;
+                // promptObjLS["adjdef" + i] = adjdata.results[0].definition;
+
+                var adjCard = document.createElement("div");
+                adjCard.setAttribute("class", "card, column");
+                $(adjCard).append("<h5 class='card-header'>" + adjdata.word + "</h5>");
+                $(adjCard).append("<p class='card-content'>" + adjdata.results[0].definition + "</p>");
+                $("#adj-container").append(adjCard);
+            })
+    }
 }
-
-// function getAdjs() {
-//     const options = {
-//         method: 'GET',
-//         headers: {
-//             'X-RapidAPI-Key': '5310a4a30cmsh92d3fc3f3671101p143a11jsn790aeb586352',
-//             'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
-//         }
-//     };
-
-//     for (i = 0; i < 3; i++) {
-//         fetch('https://wordsapiv1.p.rapidapi.com/words/?random=true&partOfSpeech=adjective', options)
-//             .then(function (response) {
-//                 return response.json();
-//             })
-//             .then(function (adjdata) {
-//                 // console.log(adjdata.word);
-//                 // console.log(adjdata.results[0].definition);
-//                 promptObjLS["adjective" + i] = adjdata.word;
-//                 promptObjLS["adjdef" + i] = adjdata.results[0].definition;
-
-//                 var adjCard = document.createElement("div");
-//                 adjCard.setAttribute("class", "card, column");
-//                 $(adjCard).append("<h5 class='card-header'>" + adjdata.word + "</h5>");
-//                 $(adjCard).append("<p class='card-content'>" + adjdata.results[0].definition + "</p>");
-//                 $("#adj-container").append(adjCard);
-//             })
-//     }
-// }
-async function getAdjs() {
+async function getAdjsAsync() {
     const options = {
         method: 'GET',
         headers: {
@@ -301,30 +316,32 @@ async function getAdjs() {
         }
     };
     for (i = 1; i < 4; i++) {
-    try {
-        // after this line, our function will wait for the `fetch()` call to be settled
-        // the `fetch()` call will either return a Response or throw an error
-        const response = await fetch('https://wordsapiv1.p.rapidapi.com/words/?random=true&partOfSpeech=adjective', options);
-        if (!response.ok) {
-            throw new Error(`HTTP error: ${response.status}`);
-        }
-        // after this line, our function will wait for the `response.json()` call to be settled
-        // the `response.json()` call will either return the parsed JSON object or throw an error
-        const adjdata = await response.json();
-        console.log("adjective" + i);
-        promptObjLS["adjective" + i] = adjdata.word;
-        promptObjLS["adjdef" + i] = adjdata.results[0].definition;
 
-        var adjCard = document.createElement("div");
-        adjCard.setAttribute("class", "card, column");
-        $(adjCard).append("<h5 class='card-header'>" + adjdata.word + "</h5>");
-        $(adjCard).append("<p class='card-content'>" + adjdata.results[0].definition + "</p>");
-        $("#adj-container").append(adjCard);
+        try {
+            console.log("this is adj loop " + i)
+            // after this line, our function will wait for the `fetch()` call to be settled
+            // the `fetch()` call will either return a Response or throw an error
+            const response = await fetch('https://wordsapiv1.p.rapidapi.com/words/?random=true&partOfSpeech=adjective', options);
+            if (!response.ok) {
+                throw new Error(`HTTP error: ${response.status}`);
+            }
+            // after this line, our function will wait for the `response.json()` call to be settled
+            // the `response.json()` call will either return the parsed JSON object or throw an error
+            const adjdata = await response.json();
+            console.log("adjective" + i);
+            promptObjLS["adjective" + i] = adjdata.word;
+            promptObjLS["adjdef" + i] = adjdata.results[0].definition;
+
+            var adjCard = document.createElement("div");
+            adjCard.setAttribute("class", "card, column");
+            $(adjCard).append("<h5 class='card-header'>" + adjdata.word + "</h5>");
+            $(adjCard).append("<p class='card-content'>" + adjdata.results[0].definition + "</p>");
+            $("#adj-container").append(adjCard);
+        }
+        catch (error) {
+            console.error(`Could not get products: ${error}`);
+        }
     }
-    catch (error) {
-        console.error(`Could not get products: ${error}`);
-    }
-}
 }
 
 
@@ -350,6 +367,7 @@ function getName() {
 function getTheme() {
     var i = Math.floor(Math.random() * storyThemes.length);
     $("#story-theme").text(storyThemes[i]);
+    promptObjLS["theme"] = storyThemes[i];
 }
 
 
