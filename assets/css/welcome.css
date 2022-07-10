@@ -1,3 +1,5 @@
+@import url('https://use.fontawesome.com/releases/v5.0.9/css/all.css');
+
 html {
     min-height: 100%;
     background-size: cover;
@@ -8,14 +10,30 @@ html {
 
 #unblock-btn {
     position: fixed;
+    background-color: #c4c2c2a5;
     bottom: 10%;
     right: 10%;
     font-size: 30px;
+
+    text-align: center;
+    cursor: pointer;
+
+}
+
+#unblock-btn:hover {
+    background-color: #ffffff1f;
+    color: white;
+    /* font-family: "FontAwesome";
+    content: "\f6e3"; */
+    transition: all 0.5s;
+
     border-color: white;
+
 }
 
 h1 {
     font-size: 60px;
+
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
@@ -44,4 +62,5 @@ h1 {
     opacity: 100%;
     font-size: 140%;
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+
 }
