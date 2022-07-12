@@ -30,12 +30,105 @@ var promptObjLS = {
     settingArray: []
 }
 
+// external js: masonry.pkgd.js, imagesloaded.pkgd.js
+// init Masonry after all images have loaded
+var $grid = $('.grid').imagesLoaded(function () {
+    $grid.masonry({
+        itemSelector: '.grid-item',
+        percentPosition: true,
+        transitionDuration: '0.8s',
+        initLayout: false,
+        columnWidth: '.grid-sizer'
+    });
+});
+
+// remove clicked items from masonry
+$grid.on('click', '.grid-item', function () {
+    console.log($grid.masonry('getItemElements').length);
+    if ($grid.masonry('getItemElements').length == 1) {
+        document.getElementById('note').className += " is-hidden";
+    }
+
+    // remove clicked element
+    $grid.masonry('remove', this)
+        // layout remaining item elements
+        .masonry('layout');
+});
+
+// on click, search button validates user input and runs functions according to which options are selected
+$("#search-btn").click(function () {
+    document.getElementById('result-container').className += " is-hidden";
+    if ((portraitCheck.val() == "blank") && (nameCheck.val() == "blank") && !(nounsCheck.is(":checked")) && !(adjCheck.is(":checked")) && !(themeCheck.is(":checked")) && (settingCheck.val() == "blank")) {
+        $("#dialog").dialog({
+            title: "Invalid Input ",
+            autoOpen: false,
+            width: 350,
+            height: 100,
+            modal: true,
+            draggable: false,
+            resizable: false,
+            closeOnEscape: false,
+            show: {
+                effect: "blind",
+                duration: 10
+            },
+            hide: {
+                effect: "explode",
+                duration: 500
+            }
+        });
+        $("#dialog").dialog("open")
+    }
+    if (nameCheck.val() !== "blank") {
+        getName();
+        document.getElementById('name-container').className -= "is-hidden";
+        nameCheck.prop('checked', false);
+        nameCheck.val("blank").change();
+    }
+    if (portraitCheck.val() !== "blank") {
+        getPersonPicture();
+        document.getElementById('portrait-container').className -= "is-hidden";
+        portraitCheck.prop('checked', false);
+        portraitCheck.val("blank").change();
+    }
+    if (adjCheck.is(":checked")) {
+        $("#adj-container").empty();
+        getAdjs();
+        document.getElementById('adj-container-hide').className -= "is-hidden";
+        adjCheck.prop('checked', false);
+    }
+    if (nounsCheck.is(":checked")) {
+        $("#noun-container").empty();
+        getNouns();
+        document.getElementById('noun-container-hide').className -= "is-hidden";
+        nounsCheck.prop('checked', false);
+    }
+    if (themeCheck.is(":checked")) {
+        getTheme();
+        document.getElementById('story-container').className -= "is-hidden";
+        themeCheck.prop('checked', false);
+    }
+    if (settingCheck.val() !== "blank") {
+        getItemElementWithQuery(function (imgEl) {
+            var elems = [imgEl];
+            // make jQuery object
+            var $elems = $(elems);
+
+            $grid.prepend($elems).masonry('prepended', $elems);
+            // $grid.masonry('layout');
+
+        });
+        document.getElementById('grid-container').className -= "is-hidden";
+    }
+    document.getElementById('result-container').className -= " is-hidden";
+    $grid.masonry('layout');
+})
+
 //generate 3 more images for setting
 $("#more-btn").click(function () {
     if (settingCheck.val() !== "blank") {
         for (var i = 0; i < 3; i++) {
             getItemElementWithQuery(function (imgEl) {
-                console.log(imgEl)
                 var elems = [imgEl];
                 // make jQuery object
                 var $elems = $(elems);
@@ -74,104 +167,24 @@ $("#save-btn").click(function () {
     console.log(promptObjLS);
 })
 
-// external js: masonry.pkgd.js, imagesloaded.pkgd.js
-// init Masonry after all images have loaded
-var $grid = $('.grid').imagesLoaded(function () {
-    $grid.masonry({
-        itemSelector: '.grid-item',
-        percentPosition: true,
-        transitionDuration: '0.8s',
-        initLayout: false,
-        columnWidth: '.grid-sizer'
-    });
-});
+// Randomuser.me API request
+// get random name function
+function getName() {
+    var nameGender = nameCheck.val();
+    var nameURL = `https://randomuser.me/api/?gender=${nameGender}&nat=us`;
+    fetch(nameURL).then(function (response) {
+        return response.json();
+    })
+        .then(function (namedata) {
+            var name = ((namedata.results[0].name.first) + " " + (namedata.results[0].name.last));
 
-// remove clicked items from masonry
-$grid.on('click', '.grid-item', function () {
-    console.log($grid.masonry('getItemElements').length);
-    if ($grid.masonry('getItemElements').length == 1) {
-        document.getElementById('note').className += " is-hidden";
-    }
-
-    // remove clicked element
-    $grid.masonry('remove', this)
-        // layout remaining item elements
-        .masonry('layout');
-});
-
-$("#search-btn").click(function () {
-    document.getElementById('result-container').className += " is-hidden";
-    if ((portraitCheck.val() == "blank") && (nameCheck.val() == "blank") && !(nounsCheck.is(":checked")) && !(adjCheck.is(":checked")) && !(themeCheck.is(":checked")) && (settingCheck.val() == "blank")) {
-        // console.log("no input search was requested")
-        $("#dialog").dialog({
-            title: "Invalid Input ",
-            autoOpen: false,
-            width: 350,
-            height: 100,
-            modal: true,
-            draggable: false,
-            resizable: false,
-            closeOnEscape: false,
-            show: {
-                effect: "blind",
-                duration: 10
-            },
-            hide: {
-                effect: "explode",
-                duration: 500
-            }
-        });
-        $("#dialog").dialog("open")
-    }
-    if (portraitCheck.val() !== "blank") {
-        getPersonPicture();
-        document.getElementById('portrait-container').className -= "is-hidden";
-        portraitCheck.prop('checked', false);
-        portraitCheck.val("blank").change();
-    }
-    if (nameCheck.val() !== "blank") {
-        getName();
-        document.getElementById('name-container').className -= "is-hidden";
-        nameCheck.prop('checked', false);
-        nameCheck.val("blank").change();
-    }
-    if (nounsCheck.is(":checked")) {
-        $("#noun-container").empty();
-        getNouns();
-        document.getElementById('noun-container-hide').className -= "is-hidden";
-        nounsCheck.prop('checked', false);
-    }
-    if (adjCheck.is(":checked")) {
-        $("#adj-container").empty();
-        getAdjs();
-        document.getElementById('adj-container-hide').className -= "is-hidden";
-        adjCheck.prop('checked', false);
-    }
-    if (themeCheck.is(":checked")) {
-        getTheme();
-        document.getElementById('story-container').className -= "is-hidden";
-        themeCheck.prop('checked', false);
-    }
-    if (settingCheck.val() !== "blank") {
-        getItemElementWithQuery(function (imgEl) {
-            var elems = [imgEl];
-            // make jQuery object
-            var $elems = $(elems);
-
-            $grid.prepend($elems).masonry('prepended', $elems);
-            // $grid.masonry('layout');
-
-        });
-        document.getElementById('grid-container').className -= "is-hidden";
-        // settingCheck.val("blank").change();
-    }
-    document.getElementById('result-container').className -= " is-hidden";
-    $grid.masonry('layout');
-})
+            $("#name").text(name);
+            promptObjLS["name"] = name;
+        })
+}
 
 // Unsplash API request
-// person
-
+// get random person portrait function
 function getPersonPicture() {
     var accessKey = "vNp_yDUN4379mM9W7GXhDe7zPCQf4EFeAtidDbMYbEE";
     var portraitGender = portraitCheck.val();
@@ -190,9 +203,33 @@ function getPersonPicture() {
         })
 }
 
-//WordsAPI request
-// noun
+// Words API request
+// get random adjectives and definitions function
+function getAdjs() {
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': '5310a4a30cmsh92d3fc3f3671101p143a11jsn790aeb586352',
+            'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
+        }
+    };
+    for (i = 0; i < 3; i++) {
+        fetch('https://wordsapiv1.p.rapidapi.com/words/?random=true&partOfSpeech=adjective', options)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (adjdata) {
+                var adjCard = document.createElement("div");
+                adjCard.setAttribute("class", "card, column");
+                $(adjCard).append("<h5 class='card-header'>" + adjdata.word + "</h5>");
+                $(adjCard).append("<p class='card-content'>" + adjdata.results[0].definition + "</p>");
+                $("#adj-container").append(adjCard);
+            })
+    }
+}
 
+// WordsAPI request
+// get random nouns and definitions function
 function getNouns() {
     const options = {
         method: 'GET',
@@ -216,117 +253,7 @@ function getNouns() {
     }
 }
 
-async function getNounsAsync() {
-    const options = {
-        method: 'GET',
-        headers: {
-            'X-RapidAPI-Key': '5310a4a30cmsh92d3fc3f3671101p143a11jsn790aeb586352',
-            'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
-        }
-    };
-    for (i = 1; i < 4; i++) {
-        try {
-            // after this line, our function will wait for the `fetch()` call to be settled
-            // the `fetch()` call will either return a Response or throw an error
-            const response = await fetch('https://wordsapiv1.p.rapidapi.com/words/?random=true&partOfSpeech=noun', options);
-            if (!response.ok) {
-                throw new Error(`HTTP error: ${response.status}`);
-            }
-            // after this line, our function will wait for the `response.json()` call to be settled
-            // the `response.json()` call will either return the parsed JSON object or throw an error
-            const noundata = await response.json()
-            console.log("noun" + i);
-            promptObjLS["noun" + i] = noundata.word;
-            promptObjLS["noundef" + i] = noundata.results[0].definition;
-
-            var nounCard = document.createElement("div");
-            nounCard.setAttribute("class", "card, column");
-            $(nounCard).append("<h5 class='card-header'>" + noundata.word + "</h5>");
-            $(nounCard).append("<p class='card-content'>" + noundata.results[0].definition + "</p>");
-            $("#noun-container").append(nounCard);
-        }
-        catch (error) {
-            console.error(`Could not get products: ${error}`);
-        }
-    }
-}
-
-function getAdjs() {
-    const options = {
-        method: 'GET',
-        headers: {
-            'X-RapidAPI-Key': '5310a4a30cmsh92d3fc3f3671101p143a11jsn790aeb586352',
-            'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
-        }
-    };
-    for (i = 0; i < 3; i++) {
-        fetch('https://wordsapiv1.p.rapidapi.com/words/?random=true&partOfSpeech=adjective', options)
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (adjdata) {
-                var adjCard = document.createElement("div");
-                adjCard.setAttribute("class", "card, column");
-                $(adjCard).append("<h5 class='card-header'>" + adjdata.word + "</h5>");
-                $(adjCard).append("<p class='card-content'>" + adjdata.results[0].definition + "</p>");
-                $("#adj-container").append(adjCard);
-            })
-    }
-}
-async function getAdjsAsync() {
-    const options = {
-        method: 'GET',
-        headers: {
-            'X-RapidAPI-Key': '5310a4a30cmsh92d3fc3f3671101p143a11jsn790aeb586352',
-            'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
-        }
-    };
-    for (i = 1; i < 4; i++) {
-        try {
-            console.log("this is adj loop " + i)
-            // after this line, our function will wait for the `fetch()` call to be settled
-            // the `fetch()` call will either return a Response or throw an error
-            const response = await fetch('https://wordsapiv1.p.rapidapi.com/words/?random=true&partOfSpeech=adjective', options);
-            if (!response.ok) {
-                throw new Error(`HTTP error: ${response.status}`);
-            }
-            // after this line, our function will wait for the `response.json()` call to be settled
-            // the `response.json()` call will either return the parsed JSON object or throw an error
-            const adjdata = await response.json();
-            console.log("adjective" + i);
-            promptObjLS["adjective" + i] = adjdata.word;
-            promptObjLS["adjdef" + i] = adjdata.results[0].definition;
-
-            var adjCard = document.createElement("div");
-            adjCard.setAttribute("class", "card, column");
-            $(adjCard).append("<h5 class='card-header'>" + adjdata.word + "</h5>");
-            $(adjCard).append("<p class='card-content'>" + adjdata.results[0].definition + "</p>");
-            $("#adj-container").append(adjCard);
-        }
-        catch (error) {
-            console.error(`Could not get products: ${error}`);
-        }
-    }
-}
-
-
-// NameFake API request
-
-function getName() {
-    var nameGender = nameCheck.val();
-    console.log(nameGender);
-    var nameURL = `https://randomuser.me/api/?gender=${nameGender}&nat=us`;
-    fetch(nameURL).then(function (response) {
-        return response.json();
-    })
-        .then(function (namedata) {
-            var name = ((namedata.results[0].name.first) + " " + (namedata.results[0].name.last));
-
-            $("#name").text(name);
-            promptObjLS["name"] = name;
-        })
-}
-
+// get random story theme function
 function getTheme() {
     var i = Math.floor(Math.random() * storyThemes.length);
     $("#story-theme").text(storyThemes[i]);

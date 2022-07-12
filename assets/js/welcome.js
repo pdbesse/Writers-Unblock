@@ -12,17 +12,13 @@ function getWelcomeBackground() {
 
     var welcomeURL = `https://api.unsplash.com/collections/06kpy-uZhBw/photos?client_id=${accessKey}`
 
-    // need to add Math.random and return multiple objects
     fetch(welcomeURL).then(function (response) {
         return response.json();
     })
         .then(function (welcomedata) {
             console.log(welcomedata);
             i = Math.floor(Math.random() * welcomedata.length);
-            // console.log(welcomedata.results);
             var welcomeLink = welcomedata[i].urls.full;
             background.css("background-image", "url("+ welcomeLink +")");
-            // background.css("background-size", "cover")
-    
         })
 }
