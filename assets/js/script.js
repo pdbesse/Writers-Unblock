@@ -191,7 +191,6 @@ function getPersonPicture() {
     var pageNum = Math.floor(Math.random() * 5);
     var personPicURL = `https://api.unsplash.com/search/photos?&query=${portraitGender}%20person&per_page=30&page=${pageNum}&client_id=${accessKey}`
 
-    // need to add Math.random and return multiple objects
     fetch(personPicURL).then(function (response) {
         return response.json();
     })
