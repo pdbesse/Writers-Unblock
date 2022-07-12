@@ -165,6 +165,7 @@ $("#save-btn").click(function () {
     var elems = $grid.masonry('getItemElements')
     promptObjLS['settingArray'] = elems;
     console.log(promptObjLS);
+    localStorage.setItem("prompt", JSON.stringify(promptObjLS));
 })
 
 // Randomuser.me API request
