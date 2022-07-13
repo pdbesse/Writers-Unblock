@@ -10,6 +10,8 @@ Writer's Unblock is an app intended to spur creativity. The app will deliver pro
 
 * [Installation](#installation)
 * [Usage](#usage)
+* [Bulma](#bulma-css-framework)
+* [User Stories and Code Snippets](#user-stories-and-code-snippets)
 * [Technology](#technology)
 * [Credits](#credits)
 
@@ -39,7 +41,7 @@ Because Bulma is built around flexbox, your application is already responsive to
 
 
 
-### Code Snippets
+## User Stories and Code Snippets
 
 ```javascript
 
@@ -55,6 +57,14 @@ $("#search-btn").click(function () {
 ```
 
 This code block is a small sample of what happens on a click of the Unblock button (#search-btn). It shows two validation methods to run functions: the portraitCheck is done on a dropdown, so we only have getPersonPicture() run if the value of the selection does not equal "blank". The adjCheck is done with a checkbox, so we only have getAdjs() run if the box is checked.
+
+### getName()
+```
+AS A writer
+I WANT TO generate a random name
+SO THAT I might be inspired in my writing
+```
+![Name GIF](./assets/images/name.gif)
 
 ```javascript
 
@@ -75,6 +85,14 @@ function getName() {
 ```
 
 This code block is used to fetch a random name from the randomuser.me API and add it to the HTML. It pulls the var nameGender from the input value and passes it to the request URL with a template literal. It then pulls the first and last name from the JSON response and adds it to the page and to the local storage object.
+
+### getPersonPicture()
+```
+AS A writer
+I WANT TO generate a random portrait
+SO THAT I might be inspired in my writing
+```
+![Name GIF](./assets/images/portrait.gif)
 
 ```javascript
 
@@ -98,6 +116,14 @@ function getPersonPicture() {
 ```
 
 This code block is used to getch a random portrait picture from the Unsplash API and add it to the HTML. Like the preceeding function, it pulls the var nameGender from the input value and passes it into the request URL. We had it return a random page because the images for a given set of search parameters are always returned in the same order. We then return a random image from the array of returned images, pull the URL, and add the URL to the image source in the HTML. The link is also added to the local storage object.
+
+### getAdjs()
+```
+AS A writer
+I WANT TO generate random adjectives
+SO THAT I might be inspired in my writing
+```
+![Name GIF](./assets/images/adjs.gif)
 
 ```javascript
 
@@ -130,6 +156,14 @@ This code block is the function to pull a random adjective from the Words API an
 
 We had two separate functions for random nouns and random adjectives. This could have been accomplished with one function by using a dropdown for the input selection and passing the value through to the "partOfSpeeh=" paramter using template literals.
 
+### getTheme()
+```
+AS A writer
+I WANT TO generate a random story theme
+SO THAT I might be inspired in my writing
+```
+![Name GIF](./assets/images/theme.gif)
+
 ```javascript
 
 var storyThemes = ["Good vs Evil", "Love", "Redemption", "Courage & Perseverance", "Coming of Age", "Revenge"]
@@ -144,6 +178,10 @@ function getTheme() {
 
 This code block shows the array we created to contain the 6 story themes in literature. The function pulls a random element from the array and adds the element to the HTML and to the local storage object.
 
+```
+user story
+```
+GIF
 
 ```javascript
 
@@ -152,6 +190,11 @@ code here
 ```
 
 explanation
+
+```
+user story
+```
+GIF
 
 ```javascript
 
