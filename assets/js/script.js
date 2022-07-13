@@ -123,13 +123,15 @@ $("#search-btn").click(function () {
             var $elems = $(elems);
 
             $grid.prepend($elems).masonry('prepended', $elems);
-            // $grid.masonry('layout');
+            $grid.imagesLoaded().progress(function () {
+                $grid.masonry('layout');
+            });
+
 
         });
         document.getElementById('grid-container').className -= "is-hidden";
     }
     document.getElementById('result-container').className -= " is-hidden";
-    $grid.masonry('layout');
 })
 
 //generate 3 more images for setting
@@ -140,8 +142,10 @@ $("#more-btn").click(function () {
                 var elems = [imgEl];
                 // make jQuery object
                 var $elems = $(elems);
-
                 $grid.prepend($elems).masonry('prepended', $elems);
+                $grid.imagesLoaded().progress(function () {
+                    $grid.masonry('layout');
+                });
             });
         }
         document.getElementById('result-container').className -= " is-hidden";
@@ -160,14 +164,14 @@ $("#save-btn").click(function () {
     var adjContainer = document.getElementById("adj-container");
 
     for (i = 1; i < 4; i++) {
-        promptObjLS["adjective" + i] = adjContainer.children[i-1].children[0].textContent;
-        promptObjLS["adjdef" + i] = adjContainer.children[i-1].children[1].textContent;
+        promptObjLS["adjective" + i] = adjContainer.children[i - 1].children[0].textContent;
+        promptObjLS["adjdef" + i] = adjContainer.children[i - 1].children[1].textContent;
     }
     var nounContainer = document.getElementById("noun-container");
 
     for (i = 1; i < 4; i++) {
-        promptObjLS["noun" + i] = nounContainer.children[i-1].children[0].textContent;
-        promptObjLS["noundef" + i] = nounContainer.children[i-1].children[1].textContent;
+        promptObjLS["noun" + i] = nounContainer.children[i - 1].children[0].textContent;
+        promptObjLS["noundef" + i] = nounContainer.children[i - 1].children[1].textContent;
     }
     //gets current grid of images and saves them as an array of img.grid-item elements
     var elems = $grid.masonry('getItemElements')
@@ -305,15 +309,10 @@ function getItemElementWithQuery(cb) {
     })
         .then(function (settingdata) {
             i = Math.floor(Math.random() * settingdata.results.length)
-            // console.log(settingdata.results);
             var settingLink = settingdata.results[i].urls.small;
             $img.attr("src", settingLink);
             cb(img)
-            // return img;
         }
         )
 }
 
-setInterval(function () {
-    $grid.masonry('layout');
-}, 1)
