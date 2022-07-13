@@ -179,30 +179,94 @@ function getTheme() {
 This code block shows the array we created to contain the 6 story themes in literature. The function pulls a random element from the array and adds the element to the HTML and to the local storage object.
 
 ```
-user story
+As A writer
+I WANT TO generate random story locations
+SO THAT I might be inspired in my writing
 ```
-GIF
+![setting GIF](./assets/images/demo-masonry.gif)
 
 ```javascript
 
-code here
+// function with a callback function to wait for image to return before using it
+function getItemElementWithQuery(cb) {
+    var img = document.createElement('img')
+    var $img = $(img)
+    img.className = 'grid-item'
+    var accessKey = "vNp_yDUN4379mM9W7GXhDe7zPCQf4EFeAtidDbMYbEE";
+    var settingsQuery = $("#settingCheck").val();
+    var pageNum = Math.floor(Math.random() * 30);
+    var settingPicURL = `https://api.unsplash.com/search/photos?&query=${settingsQuery}&page=${pageNum}&client_id=${accessKey}`
+
+    // need to add Math.random and return multiple objects
+    fetch(settingPicURL).then(function (response) {
+        return response.json();
+    })
+        .then(function (settingdata) {
+            i = Math.floor(Math.random() * settingdata.results.length)
+            var settingLink = settingdata.results[i].urls.small;
+            $img.attr("src", settingLink);
+            cb(img)
+        }
+        )
+}
+
+if (settingCheck.val() !== "blank") {
+        getItemElementWithQuery(function (imgEl) {
+            var elems = [imgEl];
+            // make jQuery object
+            var $elems = $(elems);
+            $grid.prepend($elems).masonry('prepended', $elems);
+            // $grid.masonry('layout');
+        });
+        document.getElementById('grid-container').className -= "is-hidden";
+    }
+    document.getElementById('result-container').className -= " is-hidden";
+    $grid.masonry('layout');
 
 ```
 
-explanation
+This code block shows how we added images to the Masonry grid layout, utilizing a callback function that waits until the fetch promise is resolved before prepending the resulting image.
 
 ```
-user story
+As A writer
+I WANT TO save my generated ideas
+SO THAT I can retrieve it later if desired
 ```
-GIF
+![setting GIF](./assets/images/demo-localstorage%20(1).gif)
 
 ```javascript
 
-code here
+$("#save-btn").click(function () {
+    // if there is no prompt already in local storage
+    if (!localStorage.getItem("prompt")) {
+        localStorage.setItem("prompt", JSON.stringify(promptObjLS));
+    } else {
+        // implement saving multiple prompt choices
+        localStorage.setItem("prompt", JSON.stringify(promptObjLS));
+        console.log("There is already a locally stored prompt object")
+    }
+    var adjContainer = document.getElementById("adj-container");
+
+    for (i = 1; i < 4; i++) {
+        promptObjLS["adjective" + i] = adjContainer.children[i-1].children[0].textContent;
+        promptObjLS["adjdef" + i] = adjContainer.children[i-1].children[1].textContent;
+    }
+    var nounContainer = document.getElementById("noun-container");
+
+    for (i = 1; i < 4; i++) {
+        promptObjLS["noun" + i] = nounContainer.children[i-1].children[0].textContent;
+        promptObjLS["noundef" + i] = nounContainer.children[i-1].children[1].textContent;
+    }
+    //gets current grid of images and saves them as an array of img.grid-item elements
+    var elems = $grid.masonry('getItemElements')
+    promptObjLS['settingArray'] = elems;
+    console.log(promptObjLS);
+    localStorage.setItem("prompt", JSON.stringify(promptObjLS));
+})
 
 ```
 
-explanation
+This code block shows how the user's generated ideas are saved in an object as key value pairs. We utilized Masonry's provided method `getItemElements` that returns an array of the current images in the grid layout.
 
 ## Technology
 
