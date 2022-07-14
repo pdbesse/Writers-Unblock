@@ -45,7 +45,6 @@ var $grid = $('.grid').imagesLoaded(function () {
 
 // remove clicked items from masonry
 $grid.on('click', '.grid-item', function () {
-    console.log($grid.masonry('getItemElements').length);
     if ($grid.masonry('getItemElements').length == 1) {
         document.getElementById('note').className += " is-hidden";
     }
